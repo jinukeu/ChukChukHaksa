@@ -10,8 +10,8 @@ import androidx.compose.ui.unit.dp
 import com.chukchukhaksa.moblie.common.designsystem.theme.SuwikiTheme
 import com.chukchukhaksa.moblie.common.model.TimetableCell
 import com.chukchukhaksa.moblie.common.model.TimetableCellColor
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.ClassCell
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.TimetableCellType
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.ClassCell
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.TimetableCellType
 
 @Preview
 @Composable

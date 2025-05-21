@@ -7,7 +7,7 @@ import com.chukchukhaksa.moblie.common.model.Timetable
 import com.chukchukhaksa.moblie.common.model.TimetableCell
 import com.chukchukhaksa.moblie.common.model.TimetableCellColor
 import com.chukchukhaksa.moblie.common.model.TimetableDay
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.Timetable
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.Timetable
 
 @Preview
 @Composable

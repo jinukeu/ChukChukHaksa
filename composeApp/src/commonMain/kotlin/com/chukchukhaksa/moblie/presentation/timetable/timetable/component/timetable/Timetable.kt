@@ -1,4 +1,4 @@
-package com.chukchukhaksa.moblie.presentation.timetable.component.timetable
+package com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -17,10 +17,10 @@ import com.chukchukhaksa.moblie.common.model.Timetable
 import com.chukchukhaksa.moblie.common.model.TimetableCell
 import com.chukchukhaksa.moblie.common.model.TimetableCellColor
 import com.chukchukhaksa.moblie.common.model.TimetableDay
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.ELearningCell
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.TimetableCellType
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.column.ClassColumn
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.column.TimeColumn
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.ELearningCell
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.TimetableCellType
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.column.ClassColumn
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.column.TimeColumn
 import kotlin.math.max
 
 private const val MIN_MAX_PERIOD = 8

@@ -10,8 +10,8 @@ import com.chukchukhaksa.moblie.common.designsystem.theme.SuwikiTheme
 import com.chukchukhaksa.moblie.common.model.TimetableCell
 import com.chukchukhaksa.moblie.common.model.TimetableCellColor
 import com.chukchukhaksa.moblie.common.model.TimetableDay
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.EmptyCell
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.column.ClassColumn
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.EmptyCell
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.column.ClassColumn
 
 @Preview
 @Composable

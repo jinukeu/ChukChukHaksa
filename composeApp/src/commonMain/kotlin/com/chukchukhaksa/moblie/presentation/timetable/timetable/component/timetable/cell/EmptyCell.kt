@@ -1,4 +1,4 @@
-package com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell
+package com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,9 +17,9 @@ import com.chukchukhaksa.moblie.common.designsystem.theme.Gray6A
 import com.chukchukhaksa.moblie.common.designsystem.theme.GrayF6
 import com.chukchukhaksa.moblie.common.designsystem.theme.SuwikiTheme
 import com.chukchukhaksa.moblie.common.designsystem.theme.White
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.MINUTE60
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.timetableBorderWidth
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.timetableHeightPerHour
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.MINUTE60
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.timetableBorderWidth
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.timetableHeightPerHour
 
 @Composable
 internal fun EmptyCell(

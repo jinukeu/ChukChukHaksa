@@ -4,5 +4,6 @@ import com.chukchukhaksa.moblie.domain.openmajor.usecase.GetOpenMajorListUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
-    factory { GetOpenMajorListUseCase(get()) }
+    /*TODO("GetOpenMajorListUseCase(인자 추가 되면 get() 함수 추가)")*/
+    factory { GetOpenMajorListUseCase() }
 }

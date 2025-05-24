@@ -8,8 +8,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.chukchukhaksa.moblie.common.ui.encodeToUri
+import com.chukchukhaksa.moblie.presentation.timetable.celleditor.CellEditorRoute
 import com.chukchukhaksa.moblie.presentation.timetable.navigation.argument.CellEditorArgument
 import com.chukchukhaksa.moblie.presentation.timetable.navigation.argument.TimetableEditorArgument
+import com.chukchukhaksa.moblie.presentation.timetable.openlecture.OpenLectureRoute
 import com.chukchukhaksa.moblie.presentation.timetable.timetable.TimetableRoute
 import com.chukchukhaksa.moblie.presentation.timetable.timetablelist.TimetableListRoute
 import kotlinx.serialization.json.Json
@@ -75,14 +77,14 @@ fun NavGraphBuilder.timetableNavGraph(
     composable(route = TimetableRoute.openLectureRoute) { navBackStackEntry ->
         val selectedOpenMajor = navBackStackEntry.savedStateHandle.get<String>(argumentName) ?: "전체"
 
-//        OpenLectureRoute(
-//            selectedOpenMajor = selectedOpenMajor,
-//            popBackStack = popBackStack,
-//            handleException = handleException,
-//            onShowToast = onShowToast,
-//            navigateOpenMajor = navigateOpenMajor,
-//            navigateCellEditor = navigateCellEditor,
-//        )
+        OpenLectureRoute(
+            selectedOpenMajor = selectedOpenMajor,
+            popBackStack = popBackStack,
+            handleException = handleException,
+            onShowToast = onShowToast,
+            navigateOpenMajor = navigateOpenMajor,
+            navigateCellEditor = navigateCellEditor,
+        )
     }
 
     composable(
@@ -94,11 +96,11 @@ fun NavGraphBuilder.timetableNavGraph(
             },
         ),
     ) {
-//        CellEditorRoute(
-//            popBackStack = popBackStack,
-//            handleException = handleException,
-//            onShowToast = onShowToast,
-//        )
+        CellEditorRoute(
+            popBackStack = popBackStack,
+            handleException = handleException,
+            onShowToast = onShowToast,
+        )
     }
 
     composable(

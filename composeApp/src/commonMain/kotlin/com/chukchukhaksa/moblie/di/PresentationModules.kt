@@ -1,7 +1,13 @@
 package com.chukchukhaksa.moblie.di
 
+import com.chukchukhaksa.moblie.MainViewModel
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.TimetableViewModel
+import com.chukchukhaksa.moblie.presentation.timetable.timetablelist.TimetableListViewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val presentationModule = module {
-    /*TODO("presentation 계층 추가 후 작업")*/
+    viewModelOf(::TimetableViewModel)
+    viewModelOf(::TimetableListViewModel)
+    viewModelOf(::MainViewModel)
 }

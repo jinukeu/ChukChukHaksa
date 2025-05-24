@@ -1,11 +1,11 @@
-package com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell
+package com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.chukchukhaksa.moblie.common.model.TimetableCell
 import com.chukchukhaksa.moblie.common.ui.suwikiClickable
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.toText
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.toText
 
 @Composable
 internal fun ELearningCell(

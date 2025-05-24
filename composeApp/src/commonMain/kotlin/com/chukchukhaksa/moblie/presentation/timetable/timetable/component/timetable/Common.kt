@@ -1,4 +1,4 @@
-package com.chukchukhaksa.moblie.presentation.timetable.component.timetable
+package com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable
 
 import androidx.compose.ui.unit.dp
 import com.chukchukhaksa.moblie.common.model.TimetableDay

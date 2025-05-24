@@ -1,4 +1,4 @@
-package com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell
+package com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,8 +19,8 @@ import com.chukchukhaksa.moblie.common.model.TimetableCell
 import com.chukchukhaksa.moblie.common.model.TimetableCellColor
 import com.chukchukhaksa.moblie.common.ui.suwikiClickable
 import com.chukchukhaksa.moblie.common.ui.timetableCellColorHexMap
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.timetableBorderWidth
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.timetableHeightPerHour
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.timetableBorderWidth
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.timetableHeightPerHour
 
 enum class TimetableCellType(val text: String) {
     CLASSNAME("수업명"),

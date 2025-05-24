@@ -1,4 +1,4 @@
-package com.chukchukhaksa.moblie.presentation.timetable.component.timetable.column
+package com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.column
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,12 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.chukchukhaksa.moblie.common.model.TimetableCell
 import com.chukchukhaksa.moblie.common.model.TimetableDay
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.MINUTE10
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.MINUTE60
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.ClassCell
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.EmptyCell
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.TimetableCellType
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.toText
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.MINUTE10
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.MINUTE60
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.ClassCell
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.EmptyCell
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.TimetableCellType
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.toText
 
 internal fun TimetableCell.getStartAndEndMinute(): Pair<Int, Int> {
     val startMinute = (this.startPeriod + 8) * MINUTE60 + 3 * MINUTE10

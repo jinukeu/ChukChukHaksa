@@ -1,9 +1,9 @@
-package com.chukchukhaksa.moblie.presentation.timetable.component.timetable.column
+package com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.column
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.chukchukhaksa.moblie.presentation.timetable.component.timetable.cell.EmptyCell
+import com.chukchukhaksa.moblie.presentation.timetable.timetable.component.timetable.cell.EmptyCell
 
 @Composable
 internal fun TimeColumn(

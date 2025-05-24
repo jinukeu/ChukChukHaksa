@@ -10,7 +10,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
 //            공통으로 사용되는 module
             domainModule,
 //            dataModule,
-//            presentationModule
+            presentationModule
 //            platformModule -> 각 플랫폼 별로 module이 다른 경우
         )
     }

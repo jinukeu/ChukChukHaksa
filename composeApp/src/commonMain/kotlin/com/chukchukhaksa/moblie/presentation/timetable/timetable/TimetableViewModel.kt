@@ -75,7 +75,7 @@ class TimetableViewModel(
     }
 
     fun navigateTimetableList() {
-//        postSideEffect(TimetableSideEffect.NavigateTimetableList)
+        mviStore.postSideEffect(TimetableSideEffect.NavigateTimetableList)
     }
 
     fun navigateAddTimetableCell() {

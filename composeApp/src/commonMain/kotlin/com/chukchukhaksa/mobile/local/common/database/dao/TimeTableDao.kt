@@ -10,20 +10,20 @@ import com.chukchukhaksa.mobile.local.common.database.entity.TimetableEntity
 @Dao
 interface TimeTableDao {
     @Query("SELECT * FROM TimetableEntity ORDER BY createTime DESC")
-    fun getAll(): List<TimetableEntity>
+    suspend fun getAll(): List<TimetableEntity>
 
     @Query("SELECT * FROM TimetableEntity WHERE createTime = :createTime")
-    fun get(createTime: Long): TimetableEntity?
+    suspend fun get(createTime: Long): TimetableEntity?
 
     @Insert
-    fun insert(data: TimetableEntity)
+    suspend fun insert(data: TimetableEntity)
 
     @Query("DELETE FROM TimetableEntity")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Delete
-    fun delete(data: TimetableEntity)
+    suspend fun delete(data: TimetableEntity)
 
     @Update
-    fun update(data: TimetableEntity)
+    suspend fun update(data: TimetableEntity)
 }

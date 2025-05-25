@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -51,11 +53,18 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 android {
@@ -87,5 +96,15 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    kspKmp(libs.androidx.room.compiler)
+}
+
+fun DependencyHandlerScope.kspKmp(
+    artifact: Provider<MinimalExternalModuleDependency>,
+) {
+    add("kspAndroid", artifact)
+    add("kspIosX64", artifact)
+    add("kspIosArm64", artifact)
+    add("kspIosSimulatorArm64", artifact)
 }
 

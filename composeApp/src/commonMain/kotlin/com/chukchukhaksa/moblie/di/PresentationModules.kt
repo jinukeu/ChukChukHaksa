@@ -1,6 +1,7 @@
 package com.chukchukhaksa.moblie.di
 
 import com.chukchukhaksa.moblie.MainViewModel
+import com.chukchukhaksa.moblie.presentation.openmajor.OpenMajorViewModel
 import com.chukchukhaksa.moblie.presentation.timetable.celleditor.CellEditorViewModel
 import com.chukchukhaksa.moblie.presentation.timetable.openlecture.OpenLectureViewModel
 import com.chukchukhaksa.moblie.presentation.timetable.timetable.TimetableViewModel
@@ -14,4 +15,5 @@ val presentationModule = module {
     viewModelOf(::MainViewModel)
     viewModelOf(::CellEditorViewModel)
     viewModelOf(::OpenLectureViewModel)
+    viewModelOf(::OpenMajorViewModel)
 }

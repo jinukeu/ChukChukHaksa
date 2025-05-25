@@ -7,9 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.compose.NavHost
 import com.chukchukhaksa.moblie.common.designsystem.theme.SuwikiTheme
+import com.chukchukhaksa.moblie.presentation.openmajor.navigation.OpenMajorRoute
+import com.chukchukhaksa.moblie.presentation.openmajor.navigation.openMajorNavGraph
 import com.chukchukhaksa.moblie.presentation.timetable.navigation.timetableNavGraph
-import com.chukchukhaksa.moblie.presentation.timetable.timetable.TimetableRoute
-import com.chukchukhaksa.moblie.presentation.timetable.timetable.TimetableViewModel
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -40,18 +40,18 @@ fun App(
                         navController = navigator.navController,
                         startDestination = navigator.startDestination,
                     ) {
-//                    openMajorNavGraph(
-//                        popBackStack = navigator::popBackStackIfNotHome,
-//                        popBackStackWithArgument = { openMajor ->
-//                            navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
-//                                OpenMajorRoute.ARGUMENT_NAME,
-//                                openMajor,
-//                            )
-//                            navigator.popBackStackIfNotHome()
-//                        },
-//                        handleException = viewModel::handleException,
-//                        onShowToast = viewModel::onShowToast,
-//                    )
+                        openMajorNavGraph(
+                            popBackStack = navigator::popBackStackIfNotHome,
+                            popBackStackWithArgument = { openMajor ->
+                                navigator.navController.previousBackStackEntry?.savedStateHandle?.set(
+                                    OpenMajorRoute.ARGUMENT_NAME,
+                                    openMajor,
+                                )
+                                navigator.popBackStackIfNotHome()
+                            },
+                            handleException = {},
+                            onShowToast = {},
+                        )
 
                         timetableNavGraph(
                             padding = innerPadding,

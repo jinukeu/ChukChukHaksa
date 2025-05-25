@@ -68,7 +68,7 @@ room {
 }
 
 android {
-    namespace = "com.chukchukhaksa.moblie"
+    namespace = "com.chukchukhaksa.mobile"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

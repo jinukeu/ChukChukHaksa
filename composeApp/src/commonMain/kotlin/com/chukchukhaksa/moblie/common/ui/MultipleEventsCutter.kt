@@ -1,6 +1,6 @@
 package com.chukchukhaksa.moblie.common.ui
 
-import com.chukchukhaksa.moblie.shared.SystemClock
+import kotlinx.datetime.Clock
 
 /**
  * 클릭이 지연될 시간을 정의하는 변수
@@ -18,7 +18,7 @@ internal fun MultipleEventsCutter.Companion.get(): MultipleEventsCutter =
 
 private class MultipleEventsCutterImpl : MultipleEventsCutter {
   private val now: Long
-    get() = SystemClock.currentTimeMillis()
+    get() = Clock.System.now().toEpochMilliseconds()
 
   private var lastEventTimeMs: Long = 0
 

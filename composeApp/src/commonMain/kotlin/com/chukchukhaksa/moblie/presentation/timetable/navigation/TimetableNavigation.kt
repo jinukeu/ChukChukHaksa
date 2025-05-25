@@ -13,6 +13,7 @@ import com.chukchukhaksa.moblie.presentation.timetable.navigation.argument.CellE
 import com.chukchukhaksa.moblie.presentation.timetable.navigation.argument.TimetableEditorArgument
 import com.chukchukhaksa.moblie.presentation.timetable.openlecture.OpenLectureRoute
 import com.chukchukhaksa.moblie.presentation.timetable.timetable.TimetableRoute
+import com.chukchukhaksa.moblie.presentation.timetable.timetableeditor.TimetableEditorRoute
 import com.chukchukhaksa.moblie.presentation.timetable.timetablelist.TimetableListRoute
 import kotlinx.serialization.json.Json
 
@@ -67,11 +68,11 @@ fun NavGraphBuilder.timetableNavGraph(
             },
         ),
     ) {
-//        TimetableEditorRoute(
-//            popBackStack = popBackStack,
-//            handleException = handleException,
-//            onShowToast = onShowToast,
-//        )
+        TimetableEditorRoute(
+            popBackStack = popBackStack,
+            handleException = handleException,
+            onShowToast = onShowToast,
+        )
     }
 
     composable(route = TimetableRoute.openLectureRoute) { navBackStackEntry ->

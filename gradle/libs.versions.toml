@@ -11,6 +11,7 @@ androidx-espresso = "3.6.1"
 androidx-lifecycle = "2.8.4"
 androidx-testExt = "1.2.1"
 composeMultiplatform = "1.8.0"
+datastorePreferences = "1.1.7"
 junit = "4.13.2"
 kotlin = "2.1.20"
 kotlinx-immutable = "0.3.8"
@@ -22,6 +23,7 @@ androidx-room = "2.7.1"
 ksp = "2.1.20-1.0.32"
 
 [libraries]
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }

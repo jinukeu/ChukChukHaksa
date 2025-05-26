@@ -1,7 +1,21 @@
 package com.chukchukhaksa.mobile.domain.timetable.usecase
 
-class UpdateTimetableUseCase{
-    suspend operator fun invoke(param: Param): Result<Unit> = Result.success(Unit)
+import com.chukchukhaksa.mobile.domain.common.runCatchingIgnoreCancelled
+import com.chukchukhaksa.mobile.domain.timetable.repository.TimetableRepository
+
+class UpdateTimetableUseCase(
+    private val timetableRepository: TimetableRepository,
+) {
+    suspend operator fun invoke(param: Param): Result<Unit> = runCatchingIgnoreCancelled {
+        with(param) {
+            timetableRepository.updateTimetable(
+                createTime = createTime,
+                year = year,
+                semester = semester,
+                name = name,
+            )
+        }
+    }
 
     data class Param(
         val createTime: Long,

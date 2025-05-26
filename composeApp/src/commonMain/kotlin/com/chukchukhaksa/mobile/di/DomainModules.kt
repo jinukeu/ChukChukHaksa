@@ -23,20 +23,20 @@ val domainModule = module {
     // OpenMajor
     factory { GetOpenMajorListUseCase() }
 
-    // Timetable
-    factory { DeleteTimetableUseCase() }
-    factory { GetAllTimetableUseCase() }
-    factory { GetMainTimetableUseCase() }
-    factory { InsertTimetableUseCase() }
-    factory { UpdateTimetableUseCase() }
-    factory { SetMainTimetableCreateTime() }
+    // Timetable management use cases
+    factory { DeleteTimetableUseCase(get()) }
+    factory { GetAllTimetableUseCase(get()) }
+    factory { GetMainTimetableUseCase(get()) }
+    factory { InsertTimetableUseCase(get()) }
+    factory { UpdateTimetableUseCase(get()) }
+    factory { SetMainTimetableCreateTime(get()) }
 
     // Timetable cell use cases
-    factory { DeleteTimetableCellUseCase() }
-    factory { InsertTimetableCellUseCase() }
-    factory { UpdateTimetableCellUseCase() }
-    factory { GetTimetableCellTypeUseCase() }
-    factory { SetTimetableCellTypeUseCase() }
+    factory { DeleteTimetableCellUseCase(get()) }
+    factory { InsertTimetableCellUseCase(get()) }
+    factory { UpdateTimetableCellUseCase(get()) }
+    factory { GetTimetableCellTypeUseCase(get()) }
+    factory { SetTimetableCellTypeUseCase(get()) }
 
     // Open lecture use cases
     factory { GetOpenLectureListUseCase() }

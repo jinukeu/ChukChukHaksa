@@ -1,0 +1,15 @@
+package com.chukchukhaksa.mobile.local.datasource.timetable.di
+
+import com.chukchukhaksa.mobile.data.timetable.datasource.LocalTimetableDataSource
+import com.chukchukhaksa.mobile.local.datasource.timetable.LocalTimetableDatasourceImpl
+import org.koin.dsl.module
+
+val localTimetableDataSourceModule = module {
+    single<LocalTimetableDataSource> {
+        LocalTimetableDatasourceImpl(get(), get())
+    }
+
+//  single<LocalOpenLectureDataSource> {
+//    LocalOpenLectureDatasourceImpl(get(named("normalDataStore")), get())
+//  }
+}

@@ -8,11 +8,11 @@ import com.chukchukhaksa.mobile.local.database.openmajor.entity.OpenMajorEntity
 @Dao
 interface OpenMajorDao {
     @Insert
-    fun insertAll(lists: List<OpenMajorEntity>)
+    suspend fun insertAll(lists: List<OpenMajorEntity>)
 
     @Query("DELETE FROM OpenMajorEntity")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM OpenMajorEntity")
-    fun getAll(): List<OpenMajorEntity>
+    suspend fun getAll(): List<OpenMajorEntity>
 }

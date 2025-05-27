@@ -12,9 +12,11 @@ import org.koin.dsl.module
 
 val databaseModule =
     module {
-        timetableDatabaseModule
-        openMajorDatabaseModule
-        openLectureDatabaseModule
+        includes(
+            timetableDatabaseModule,
+            openMajorDatabaseModule,
+            openLectureDatabaseModule,
+        )
     }
 
 val timetableDatabaseModule = module {

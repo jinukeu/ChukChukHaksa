@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.chukchukhaksa.mobile.common.model.Timetable
 import com.chukchukhaksa.mobile.data.timetable.datasource.LocalTimetableDataSource
-import com.chukchukhaksa.mobile.local.common.database.database.TimetableDatabase
+import com.chukchukhaksa.mobile.local.database.timetable.database.TimetableDatabase
 import com.chukchukhaksa.mobile.local.datasource.timetable.converter.toEntity
 import com.chukchukhaksa.mobile.local.datasource.timetable.converter.toModel
 import kotlinx.coroutines.Dispatchers

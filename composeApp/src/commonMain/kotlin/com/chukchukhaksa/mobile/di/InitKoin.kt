@@ -1,6 +1,6 @@
 package com.chukchukhaksa.mobile.di
 
-import com.chukchukhaksa.mobile.local.common.database.di.databaseModule
+import com.chukchukhaksa.mobile.local.common.database.timetable.di.databaseModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 

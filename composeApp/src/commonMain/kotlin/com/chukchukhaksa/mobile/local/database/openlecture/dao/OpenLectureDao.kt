@@ -19,11 +19,11 @@ interface OpenLectureDao {
         AND (:grade IS NULL OR grade = :grade)
     """
     )
-    fun searchLectures(
+    suspend fun searchLectures(
         lectureOrProfessorName: String? = null,
         major: String? = null,
         grade: Int? = null
-    ): Flow<List<OpenLectureEntity>>
+    ): List<OpenLectureEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLectures(lectures: List<OpenLectureEntity>)

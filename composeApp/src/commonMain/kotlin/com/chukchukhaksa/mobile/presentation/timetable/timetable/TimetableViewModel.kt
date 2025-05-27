@@ -1,77 +1,89 @@
 package com.chukchukhaksa.mobile.presentation.timetable.timetable
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chukchukhaksa.mobile.common.model.TimetableCell
 import com.chukchukhaksa.mobile.common.ui.mviStore
+import com.chukchukhaksa.mobile.domain.timetable.usecase.DeleteTimetableCellUseCase
+import com.chukchukhaksa.mobile.domain.timetable.usecase.GetMainTimetableUseCase
+import com.chukchukhaksa.mobile.domain.timetable.usecase.GetTimetableCellTypeUseCase
+import com.chukchukhaksa.mobile.domain.timetable.usecase.SetTimetableCellTypeUseCase
+import com.chukchukhaksa.mobile.presentation.timetable.navigation.argument.toCellEditorArgument
+import com.chukchukhaksa.mobile.presentation.timetable.timetable.component.timetable.cell.TimetableCellType
+import kotlinx.coroutines.launch
 
 class TimetableViewModel(
+    private val getMainTimetableUseCase: GetMainTimetableUseCase,
+    private val getTimetableCellTypeUseCase: GetTimetableCellTypeUseCase,
+    private val deleteTimetableCellUseCase: DeleteTimetableCellUseCase,
+    private val setTimetableCellTypeUseCase: SetTimetableCellTypeUseCase,
 ) : ViewModel() {
     val mviStore = mviStore<TimetableState, TimetableSideEffect>(TimetableState())
 
-    fun getMainTimetable() {
-//    val cellType = TimetableCellType.getType(getTimetableCellTypeUseCase().getOrNull())
-//
-//    getMainTimetableUseCase()
-//      .onSuccess { timetable ->
-//        reduce {
-//          state.copy(
-//            timetable = timetable,
-//            cellType = cellType,
-//            showTimetableEmptyColumn = timetable == null,
-//          )
-//        }
-//      }
-//      .onFailure {
-//        postSideEffect(TimetableSideEffect.HandleException(it))
-//      }
+    fun getMainTimetable() = viewModelScope.launch {
+        val cellType = TimetableCellType.getType(getTimetableCellTypeUseCase().getOrNull())
+
+        getMainTimetableUseCase()
+            .onSuccess { timetable ->
+                mviStore.setState {
+                    copy(
+                        timetable = timetable,
+                        cellType = cellType,
+                        showTimetableEmptyColumn = timetable == null,
+                    )
+                }
+            }
+            .onFailure {
+                mviStore.postSideEffect(TimetableSideEffect.HandleException(it))
+            }
     }
 
-    fun deleteCell(cell: TimetableCell) {
-//    deleteTimetableCellUseCase(cell)
-//      .onSuccess {
-//        reduce {
-//          state.copy(
-//            showEditCellBottomSheet = false,
-//            timetable = it,
-//          )
-//        }
-//      }
-//      .onFailure { postSideEffect(TimetableSideEffect.HandleException(it)) }
+    fun deleteCell(cell: TimetableCell) = viewModelScope.launch {
+        deleteTimetableCellUseCase(cell)
+            .onSuccess {
+                mviStore.setState {
+                    copy(
+                        showEditCellBottomSheet = false,
+                        timetable = it,
+                    )
+                }
+            }
+            .onFailure { mviStore.postSideEffect(TimetableSideEffect.HandleException(it)) }
     }
 
-    fun showEditCellBottomSheet(cell: TimetableCell) {
-//    reduce {
-//      state.copy(
-//        showEditCellBottomSheet = true,
-//        selectedCell = cell,
-//      )
-//    }
+    fun showEditCellBottomSheet(cell: TimetableCell) = viewModelScope.launch {
+        mviStore.setState {
+            copy(
+                showEditCellBottomSheet = true,
+                selectedCell = cell,
+            )
+        }
     }
 
-    fun updateCellType(position: Int) {
-//    val cellType = TimetableCellType.entries[position]
-//    setTimetableCellTypeUseCase(cellType.name)
-//      .onSuccess { reduce { state.copy(cellType = cellType) } }
+    fun updateCellType(position: Int) = viewModelScope.launch {
+        val cellType = TimetableCellType.entries[position]
+        setTimetableCellTypeUseCase(cellType.name)
+            .onSuccess { mviStore.setState { copy(cellType = cellType) } }
     }
 
     fun showSelectCellTypeBottomSheet() {
-//        reduce { state.copy(showSelectCellTypeBottomSheet = true) }
+        mviStore.setState { copy(showSelectCellTypeBottomSheet = true) }
     }
 
     fun hideSelectCellTypeBottomSheet() {
-//        reduce { state.copy(showSelectCellTypeBottomSheet = false) }
+        mviStore.setState { copy(showSelectCellTypeBottomSheet = false) }
     }
 
     fun navigateCellEdit(cell: TimetableCell) {
-//        postSideEffect(TimetableSideEffect.NavigateCellEditor(cell.toCellEditorArgument()))
+        mviStore.postSideEffect(TimetableSideEffect.NavigateCellEditor(cell.toCellEditorArgument()))
     }
 
     fun hideEditCellBottomSheet() {
-//        reduce { state.copy(showEditCellBottomSheet = false) }
+        mviStore.setState { copy(showEditCellBottomSheet = false) }
     }
 
     fun navigateTimetableEditor() {
-//        postSideEffect(TimetableSideEffect.NavigateTimetableEditor)
+        mviStore.postSideEffect(TimetableSideEffect.NavigateTimetableEditor)
     }
 
     fun navigateTimetableList() {
@@ -79,10 +91,11 @@ class TimetableViewModel(
     }
 
     fun navigateAddTimetableCell() {
-//        if (state.timetable == null) {
-//            postSideEffect(TimetableSideEffect.ShowNeedCreateTimetableToast)
-//        } else {
-//            postSideEffect(TimetableSideEffect.NavigateAddTimetableCell)
-//        }
+        val state = mviStore.uiState.value
+        if (state.timetable == null) {
+            mviStore.postSideEffect(TimetableSideEffect.ShowNeedCreateTimetableToast)
+        } else {
+            mviStore.postSideEffect(TimetableSideEffect.NavigateAddTimetableCell)
+        }
     }
 }

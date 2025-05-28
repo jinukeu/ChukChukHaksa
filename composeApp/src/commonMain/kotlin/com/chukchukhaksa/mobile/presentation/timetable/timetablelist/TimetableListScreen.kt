@@ -22,6 +22,7 @@ import chukchukhaksa.composeapp.generated.resources.timetable_list_screen_empty_
 import chukchukhaksa.composeapp.generated.resources.word_add
 import chukchukhaksa.composeapp.generated.resources.word_cancel
 import chukchukhaksa.composeapp.generated.resources.word_confirm
+import com.chukchukhaksa.mobile.common.designsystem.component.SuwikiBackground
 import com.chukchukhaksa.mobile.common.designsystem.component.appbar.SuwikiAppBarWithTextButton
 import com.chukchukhaksa.mobile.common.designsystem.component.container.SuwikiEditContainer
 import com.chukchukhaksa.mobile.common.designsystem.component.dialog.SuwikiDialog
@@ -79,52 +80,54 @@ fun TimetableListScreen(
     onClickDeleteDialogDismiss: () -> Unit = {},
     onClickTimetableContainer: (Long) -> Unit = {},
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        SuwikiAppBarWithTextButton(
-            buttonText = stringResource(resource = Res.string.word_add),
-            onClickBack = onClickBack,
-            onClickTextButton = onClickAddTextButton,
-        )
-
-        if (uiState.timetableList.isEmpty()) {
-            Text(
-                modifier = Modifier
-                    .padding(top = 150.dp),
-                textAlign = TextAlign.Center,
-                text = stringResource(Res.string.timetable_list_screen_empty_timetable),
-                style = SuwikiTheme.typography.header4,
-                color = Gray95,
+    SuwikiBackground {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(White),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            SuwikiAppBarWithTextButton(
+                buttonText = stringResource(resource = Res.string.word_add),
+                onClickBack = onClickBack,
+                onClickTextButton = onClickAddTextButton,
             )
-        }
 
-        LazyColumn {
-            items(items = uiState.timetableList, key = { it.createTime }) { timetable ->
-                SuwikiEditContainer(
-                    name = timetable.name,
-                    semester = "${timetable.year}-${timetable.semester}",
-                    onClickEditButton = { onClickTimetableEditButton(timetable) },
-                    onClickDeleteButton = { onClickTimetableDeleteButton(timetable) },
-                    onClick = { onClickTimetableContainer(timetable.createTime) },
+            if (uiState.timetableList.isEmpty()) {
+                Text(
+                    modifier = Modifier
+                        .padding(top = 150.dp),
+                    textAlign = TextAlign.Center,
+                    text = stringResource(Res.string.timetable_list_screen_empty_timetable),
+                    style = SuwikiTheme.typography.header4,
+                    color = Gray95,
                 )
             }
-        }
-    }
 
-    if (uiState.showDeleteDialog) {
-        SuwikiDialog(
-            headerText = stringResource(Res.string.delete_timetable_dialog_title),
-            bodyText = stringResource(Res.string.delete_timetable_dialog_body),
-            confirmButtonText = stringResource(Res.string.word_confirm),
-            dismissButtonText = stringResource(Res.string.word_cancel),
-            onDismissRequest = onDismissDeleteDialogRequest,
-            onClickDismiss = onClickDeleteDialogDismiss,
-            onClickConfirm = onClickDeleteDialogConfirm,
-        )
+            LazyColumn {
+                items(items = uiState.timetableList, key = { it.createTime }) { timetable ->
+                    SuwikiEditContainer(
+                        name = timetable.name,
+                        semester = "${timetable.year}-${timetable.semester}",
+                        onClickEditButton = { onClickTimetableEditButton(timetable) },
+                        onClickDeleteButton = { onClickTimetableDeleteButton(timetable) },
+                        onClick = { onClickTimetableContainer(timetable.createTime) },
+                    )
+                }
+            }
+        }
+
+        if (uiState.showDeleteDialog) {
+            SuwikiDialog(
+                headerText = stringResource(Res.string.delete_timetable_dialog_title),
+                bodyText = stringResource(Res.string.delete_timetable_dialog_body),
+                confirmButtonText = stringResource(Res.string.word_confirm),
+                dismissButtonText = stringResource(Res.string.word_cancel),
+                onDismissRequest = onDismissDeleteDialogRequest,
+                onClickDismiss = onClickDeleteDialogDismiss,
+                onClickConfirm = onClickDeleteDialogConfirm,
+            )
+        }
     }
 }
 

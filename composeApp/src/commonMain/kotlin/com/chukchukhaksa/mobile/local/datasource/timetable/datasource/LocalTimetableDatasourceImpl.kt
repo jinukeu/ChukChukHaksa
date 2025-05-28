@@ -1,4 +1,4 @@
-package com.chukchukhaksa.mobile.local.datasource.timetable
+package com.chukchukhaksa.mobile.local.datasource.timetable.datasource
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

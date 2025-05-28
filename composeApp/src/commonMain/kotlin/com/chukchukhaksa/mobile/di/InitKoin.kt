@@ -1,7 +1,6 @@
 package com.chukchukhaksa.mobile.di
 
 import com.chukchukhaksa.mobile.data.timetable.di.timetableRepositoryModule
-import com.chukchukhaksa.mobile.local.database.common.di.databaseModule
 import com.chukchukhaksa.mobile.local.database.common.di.openLectureDatabaseModule
 import com.chukchukhaksa.mobile.local.database.common.di.openMajorDatabaseModule
 import com.chukchukhaksa.mobile.local.database.common.di.timetableDatabaseModule

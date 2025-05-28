@@ -3,8 +3,11 @@ package com.chukchukhaksa.mobile.presentation.timetable.timetableeditor
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -17,6 +20,7 @@ import chukchukhaksa.composeapp.generated.resources.create_timetable_need_select
 import chukchukhaksa.composeapp.generated.resources.create_timetable_screen_placeholder
 import chukchukhaksa.composeapp.generated.resources.word_complete
 import chukchukhaksa.composeapp.generated.resources.word_select_semester
+import com.chukchukhaksa.mobile.common.designsystem.component.SuwikiBackground
 import com.chukchukhaksa.mobile.common.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.chukchukhaksa.mobile.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
 import com.chukchukhaksa.mobile.common.designsystem.component.button.SuwikiContainedLargeButton
@@ -72,47 +76,51 @@ fun TimetableEditorScreen(
     hideSemesterBottomSheet: () -> Unit = {},
     onClickSemesterItem: (Int) -> Unit = {},
 ) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(White),
-    ) {
-        SuwikiAppBarWithTitle(
-            showCloseIcon = false,
-            onClickBack = onClickBack,
-        )
-
-        Spacer(modifier = Modifier.size(20.dp))
-
+    SuwikiBackground {
         Column(
-            modifier = Modifier.padding(24.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(White),
         ) {
-            SuwikiSelectionContainer(
-                title = uiState.semester?.toText() ?: stringResource(Res.string.word_select_semester),
-                onClick = onClickSelectionContainer,
+            SuwikiAppBarWithTitle(
+                showCloseIcon = false,
+                onClickBack = onClickBack,
             )
 
-            Spacer(modifier = Modifier.size(22.dp))
+            Spacer(modifier = Modifier.size(20.dp))
 
-            SuwikiRegularTextField(
-                value = uiState.name,
-                onValueChange = onValueChangeTimetableName,
-                onClickClearButton = onClickTextFieldClearButton,
-                placeholder = stringResource(Res.string.create_timetable_screen_placeholder),
-            )
+            Column(
+                modifier = Modifier.padding(24.dp),
+            ) {
+                SuwikiSelectionContainer(
+                    title = uiState.semester?.toText() ?: stringResource(Res.string.word_select_semester),
+                    onClick = onClickSelectionContainer,
+                )
 
-            Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.size(22.dp))
 
-            SuwikiContainedLargeButton(
-                modifier = Modifier.imePadding(),
-                text = stringResource(Res.string.word_complete),
-                enabled = uiState.buttonEnabled,
-                clickable = uiState.buttonEnabled,
-                onClick = onClickCompleteButton,
-            )
+                SuwikiRegularTextField(
+                    value = uiState.name,
+                    onValueChange = onValueChangeTimetableName,
+                    onClickClearButton = onClickTextFieldClearButton,
+                    placeholder = stringResource(Res.string.create_timetable_screen_placeholder),
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                SuwikiContainedLargeButton(
+                    modifier = Modifier
+                        .consumeWindowInsets(WindowInsets.navigationBars)
+                        .imePadding(),
+                    text = stringResource(Res.string.word_complete),
+                    enabled = uiState.buttonEnabled,
+                    clickable = uiState.buttonEnabled,
+                    onClick = onClickCompleteButton,
+                )
+            }
         }
     }
+
 
     SuwikiSelectBottomSheet(
         isSheetOpen = uiState.isSheetOpenSemester,

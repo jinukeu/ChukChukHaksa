@@ -16,7 +16,7 @@ class OpenLectureRepositoryImpl(
   private val remoteOpenLectureDataSource: RemoteOpenLectureDataSource,
   private val localOpenLectureDataSource: LocalOpenLectureDataSource,
 ) : OpenLectureRepository {
-  override fun getOpenLectureList(
+  override suspend fun getOpenLectureList(
     lectureOrProfessorName: String?,
     major: String?,
     grade: Int?,
@@ -77,7 +77,7 @@ class OpenLectureRepositoryImpl(
     }
   }
 
-  override fun getOpenMajor(): List<String> {
+  override suspend fun getOpenMajor(): List<String> {
     return localOpenLectureDataSource.getOpenLectureList().map { list -> list.major }
   }
 }

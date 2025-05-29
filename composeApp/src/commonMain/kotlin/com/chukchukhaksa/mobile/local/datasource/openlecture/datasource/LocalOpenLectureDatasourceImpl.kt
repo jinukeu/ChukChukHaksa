@@ -36,7 +36,7 @@ class LocalOpenLectureDatasourceImpl(
     dataStore.edit { it[OPEN_LECTURE_LIST_VERSION] = version }
   }
 
-  override fun getOpenLectureList(
+  override suspend fun getOpenLectureList(
     lectureOrProfessorName: String?,
     major: String?,
     grade: Int?,

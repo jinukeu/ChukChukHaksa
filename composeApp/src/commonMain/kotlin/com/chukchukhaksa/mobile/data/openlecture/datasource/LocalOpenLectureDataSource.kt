@@ -8,7 +8,7 @@ interface LocalOpenLectureDataSource {
 
   suspend fun setOpenLectureListVersion(version: Long)
 
-  fun getOpenLectureList(
+  suspend fun getOpenLectureList(
     lectureOrProfessorName: String? = null,
     major: String? = null,
     grade: Int? = null

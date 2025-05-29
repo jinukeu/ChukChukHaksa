@@ -4,7 +4,7 @@ import com.chukchukhaksa.mobile.common.model.OpenLecture
 import kotlinx.coroutines.flow.Flow
 
 interface OpenLectureRepository {
-    fun getOpenLectureList(
+    suspend fun getOpenLectureList(
         lectureOrProfessorName: String? = null,
         major: String? = null,
         grade: Int? = null,
@@ -16,5 +16,5 @@ interface OpenLectureRepository {
 
     suspend fun getLastUpdatedDate(): String?
 
-    fun getOpenMajor(): List<String>
+    suspend fun getOpenMajor(): List<String>
 }

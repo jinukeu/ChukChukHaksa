@@ -19,7 +19,7 @@ interface OpenLectureDao {
         AND (:grade IS NULL OR grade = :grade)
     """
     )
-    fun searchLectures(
+    suspend fun searchLectures(
         lectureOrProfessorName: String? = null,
         major: String? = null,
         grade: Int? = null

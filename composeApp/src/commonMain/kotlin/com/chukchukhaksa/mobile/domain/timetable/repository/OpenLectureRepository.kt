@@ -8,7 +8,7 @@ interface OpenLectureRepository {
         lectureOrProfessorName: String? = null,
         major: String? = null,
         grade: Int? = null,
-    ): Flow<List<OpenLecture>>
+    ): List<OpenLecture>
 
     suspend fun checkNeedUpdate(): Boolean
 
@@ -16,5 +16,5 @@ interface OpenLectureRepository {
 
     suspend fun getLastUpdatedDate(): String?
 
-    suspend fun getOpenMajor(): List<String>
+    fun getOpenMajor(): List<String>
 }

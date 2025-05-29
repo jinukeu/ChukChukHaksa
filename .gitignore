@@ -45,3 +45,4 @@ build/
 .idea/libraries
 app/.idea/
 /composeApp/google-services.json
+/iosApp/iosApp/GoogleService-Info.plist

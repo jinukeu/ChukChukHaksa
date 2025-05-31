@@ -4,11 +4,11 @@ import com.chukchukhaksa.mobile.common.model.OpenLecture
 import kotlinx.coroutines.flow.Flow
 
 interface OpenLectureRepository {
-    fun getOpenLectureList(
+    suspend fun getOpenLectureList(
         lectureOrProfessorName: String? = null,
         major: String? = null,
         grade: Int? = null,
-    ): Flow<List<OpenLecture>>
+    ): List<OpenLecture>
 
     suspend fun checkNeedUpdate(): Boolean
 

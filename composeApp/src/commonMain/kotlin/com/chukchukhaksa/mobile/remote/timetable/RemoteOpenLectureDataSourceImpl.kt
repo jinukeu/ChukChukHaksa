@@ -1,7 +1,7 @@
 package com.chukchukhaksa.mobile.remote.timetable
 
-import com.chukchukhaksa.mobile.data.timetable.datasource.RemoteOpenLectureDataSource
-import com.chukchukhaksa.mobile.data.timetable.model.OpenLectureRaw
+import com.chukchukhaksa.mobile.data.openlecture.OpenLectureRaw
+import com.chukchukhaksa.mobile.data.openlecture.datasource.RemoteOpenLectureDataSource
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.database.database
 import kotlinx.coroutines.flow.first

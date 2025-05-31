@@ -108,7 +108,6 @@ fun CellEditorRoute(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CellEditorScreen(
     uiState: CellEditorState = CellEditorState(),

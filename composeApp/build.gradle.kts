@@ -8,12 +8,13 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.googleService)
 }
 
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
     
@@ -29,11 +30,13 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.firebase.common)
+            implementation(libs.firebase.database.ktx)
+            implementation(libs.firebase.config.ktx)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -58,6 +61,9 @@ kotlin {
             implementation(libs.sqlite.bundled)
 
             implementation(libs.androidx.datastore.preferences)
+
+            implementation(libs.kmp.firebase.database)
+            implementation(libs.kmp.firebase.config)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -91,8 +97,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
+    }
+
+    dependencies {
+        coreLibraryDesugaring(libs.desugar.jdk.libs)
     }
 }
 

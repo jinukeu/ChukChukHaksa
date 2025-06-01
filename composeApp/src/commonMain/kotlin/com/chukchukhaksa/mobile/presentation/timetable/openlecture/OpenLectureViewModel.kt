@@ -15,7 +15,6 @@ import com.chukchukhaksa.mobile.domain.timetable.usecase.InsertTimetableCellUseC
 import com.chukchukhaksa.mobile.domain.timetable.usecase.UpdateOpenLectureIfNeedUseCase
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.argument.toCellEditorArgument
 import com.chukchukhaksa.mobile.presentation.timetable.openlecture.model.SchoolLevel
-import io.github.aakira.napier.Napier
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -111,51 +110,51 @@ class OpenLectureViewModel(
     }
 
     fun updateSelectedCellColor(color: TimetableCellColor) {
-//        reduce { state.copy(selectedTimetableCellColor = color) }
+        mviStore.setState{ copy(selectedTimetableCellColor = color) }
     }
 
     fun showSelectColorBottomSheet(openLecture: OpenLecture) {
-//        reduce {
-//            selectedOpenLecture = openLecture
-//            state.copy(
-//                selectedTimetableCellColor = TimetableCellColor.entries.shuffled().first(),
-//                showSelectCellColorBottomSheet = true,
-//            )
-//        }
+        mviStore.setState {
+            selectedOpenLecture = openLecture
+            copy(
+                selectedTimetableCellColor = TimetableCellColor.entries.shuffled().first(),
+                showSelectCellColorBottomSheet = true,
+            )
+        }
     }
 
     fun hideSelectColorBottomSheet() {
-//        reduce { state.copy(showSelectCellColorBottomSheet = false) }
+        mviStore.setState{ copy(showSelectCellColorBottomSheet = false) }
     }
 
     fun searchOpenLecture(search: String) {
-//        searchQuery = search
-//        getOpenLectureList(search = search)
+        searchQuery = search
+        getOpenLectureList(search = search)
     }
 
     fun updateSearchValue(searchValue: String) {
-//        reduce { state.copy(searchValue = searchValue) }
+        mviStore.setState{ copy(searchValue = searchValue) }
     }
 
     fun updateSchoolLevelPosition(schoolLevel: SchoolLevel) {
-//        reduce {
-//            state.copy(
-//                schoolLevel = schoolLevel,
-//            )
-//        }
-//
-//        getOpenLectureList()
+        mviStore.setState {
+            copy(
+                schoolLevel = schoolLevel,
+            )
+        }
+
+        getOpenLectureList()
     }
 
     fun updateSelectedOpenMajor(openMajor: String) {
-//        if (openMajor == state.selectedOpenMajor) return@intent
-//
-//        reduce {
-//            state.copy(
-//                selectedOpenMajor = openMajor,
-//            )
-//        }
-//        getOpenLectureList()
+        if (openMajor == mviStore.uiState.value.selectedOpenMajor) return
+
+        mviStore.setState{
+            copy(
+                selectedOpenMajor = openMajor,
+            )
+        }
+        getOpenLectureList()
     }
 
     private fun getOpenLectureList(
@@ -185,14 +184,14 @@ class OpenLectureViewModel(
     }
 
     fun showGradeBottomSheet() {
-//        reduce { state.copy(showSchoolLevelBottomSheet = true) }
+        mviStore.setState{copy(showSchoolLevelBottomSheet = true) }
     }
 
     fun hideGradeBottomSheet() {
-//        reduce { state.copy(showSchoolLevelBottomSheet = false) }
+        mviStore.setState{ copy(showSchoolLevelBottomSheet = false) }
     }
 
     fun popBackStack() {
-//        postSideEffect(OpenLectureSideEffect.PopBackStack)
+        mviStore.postSideEffect(OpenLectureSideEffect.PopBackStack)
     }
 }

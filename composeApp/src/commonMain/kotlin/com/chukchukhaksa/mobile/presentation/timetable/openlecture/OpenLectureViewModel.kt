@@ -1,18 +1,31 @@
 package com.chukchukhaksa.mobile.presentation.timetable.openlecture
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.chukchukhaksa.mobile.common.model.OpenLecture
+import com.chukchukhaksa.mobile.common.model.TimetableCell
 import com.chukchukhaksa.mobile.common.model.TimetableCellColor
+import com.chukchukhaksa.mobile.common.model.TimetableCellOverlapException
+import com.chukchukhaksa.mobile.common.model.TimetableDay
 import com.chukchukhaksa.mobile.common.ui.MviStore
 import com.chukchukhaksa.mobile.common.ui.mviStore
+import com.chukchukhaksa.mobile.domain.timetable.repository.OpenLectureRepository
+import com.chukchukhaksa.mobile.domain.timetable.usecase.GetOpenLectureListUseCase
+import com.chukchukhaksa.mobile.domain.timetable.usecase.InsertTimetableCellUseCase
+import com.chukchukhaksa.mobile.domain.timetable.usecase.UpdateOpenLectureIfNeedUseCase
+import com.chukchukhaksa.mobile.presentation.timetable.navigation.argument.toCellEditorArgument
 import com.chukchukhaksa.mobile.presentation.timetable.openlecture.model.SchoolLevel
+import io.github.aakira.napier.Napier
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class OpenLectureViewModel(
-//  private val updateOpenLectureIfNeedUseCase: UpdateOpenLectureIfNeedUseCase,
-//  private val getOpenLectureListUseCase: GetOpenLectureListUseCase,
-//  private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
-//  private val openLectureRepository: OpenLectureRepository,
+    private val updateOpenLectureIfNeedUseCase: UpdateOpenLectureIfNeedUseCase,
+    private val getOpenLectureListUseCase: GetOpenLectureListUseCase,
+    private val insertTimetableCellUseCase: InsertTimetableCellUseCase,
+    private val openLectureRepository: OpenLectureRepository,
 ) : ViewModel() {
 
     private val mutex: Mutex = Mutex()
@@ -29,71 +42,75 @@ class OpenLectureViewModel(
 
     private var selectedOpenLecture: OpenLecture? = null
 
-    fun initData() {
-//        if (isFirstVisit) {
-//            reduce { state.copy(isLoading = true) }
-//            updateOpenLectureIfNeedUseCase()
-//            val lastUpdated = openLectureRepository.getLastUpdatedDate()
-//            reduce {
-//                state.copy(
-//                    lastUpdatedDate = lastUpdated,
-//                )
-//            }
-//            getOpenLectureList()
-//            isFirstVisit = false
-//        }
+    fun initData() = viewModelScope.launch {
+        if (isFirstVisit) {
+            mviStore.setState { copy(isLoading = true) }
+            updateOpenLectureIfNeedUseCase()
+                .onFailure {
+                    Napier.d("${it.message}", tag = "OpenLectureViewModel")
+                }
+            val lastUpdated = openLectureRepository.getLastUpdatedDate()
+            mviStore.setState {
+                copy(
+                    lastUpdatedDate = lastUpdated,
+                )
+            }
+            getOpenLectureList()
+            isFirstVisit = false
+        }
     }
 
     fun navigateCellEditor(openLecture: OpenLecture = OpenLecture()) {
-//        postSideEffect(
-//            OpenLectureSideEffect.NavigateCellEditor(openLecture.toCellEditorArgument()),
-//        )
+        mviStore.postSideEffect(
+            OpenLectureSideEffect.NavigateCellEditor(openLecture.toCellEditorArgument()),
+        )
     }
 
     fun navigateAddCustomCell() {
-//        postSideEffect(OpenLectureSideEffect.NavigateAddCustomTimetableCell)
+        mviStore.postSideEffect(OpenLectureSideEffect.NavigateAddCustomTimetableCell)
     }
 
-    fun insertTimetable() {
-//        if (selectedOpenLecture == null) return@intent
-//
-//        val timetableCellList = if (selectedOpenLecture!!.originalCellList.isEmpty()) {
-//            listOf(
-//                TimetableCell(
-//                    name = selectedOpenLecture!!.name,
-//                    professor = selectedOpenLecture!!.professorName,
-//                    location = "",
-//                    day = TimetableDay.E_LEARNING,
-//                    startPeriod = 0,
-//                    endPeriod = 0,
-//                    color = state.selectedTimetableCellColor,
-//                ),
-//            )
-//        } else {
-//            selectedOpenLecture!!.originalCellList.map { cell ->
-//                TimetableCell(
-//                    name = selectedOpenLecture!!.name,
-//                    professor = selectedOpenLecture!!.professorName,
-//                    location = cell.location,
-//                    day = cell.day,
-//                    startPeriod = cell.startPeriod,
-//                    endPeriod = cell.endPeriod,
-//                    color = state.selectedTimetableCellColor,
-//                )
-//            }
-//        }
-//
-//        insertTimetableCellUseCase(timetableCellList)
-//            .onSuccess {
-//                postSideEffect(OpenLectureSideEffect.ShowSuccessAddCellToast)
-//            }
-//            .onFailure {
-//                if (it is TimetableCellOverlapException) {
-//                    postSideEffect(OpenLectureSideEffect.ShowOverlapCellToast(it.message))
-//                } else {
-//                    postSideEffect(OpenLectureSideEffect.HandleException(it))
-//                }
-//            }
+    fun insertTimetable() = viewModelScope.launch {
+        if (selectedOpenLecture == null) return@launch
+        val state = currentState
+
+        val timetableCellList = if (selectedOpenLecture!!.originalCellList.isEmpty()) {
+            listOf(
+                TimetableCell(
+                    name = selectedOpenLecture!!.name,
+                    professor = selectedOpenLecture!!.professorName,
+                    location = "",
+                    day = TimetableDay.E_LEARNING,
+                    startPeriod = 0,
+                    endPeriod = 0,
+                    color = state.selectedTimetableCellColor,
+                ),
+            )
+        } else {
+            selectedOpenLecture!!.originalCellList.map { cell ->
+                TimetableCell(
+                    name = selectedOpenLecture!!.name,
+                    professor = selectedOpenLecture!!.professorName,
+                    location = cell.location,
+                    day = cell.day,
+                    startPeriod = cell.startPeriod,
+                    endPeriod = cell.endPeriod,
+                    color = state.selectedTimetableCellColor,
+                )
+            }
+        }
+
+        insertTimetableCellUseCase(timetableCellList)
+            .onSuccess {
+                mviStore.postSideEffect(OpenLectureSideEffect.ShowSuccessAddCellToast)
+            }
+            .onFailure {
+                if (it is TimetableCellOverlapException) {
+                    mviStore.postSideEffect(OpenLectureSideEffect.ShowOverlapCellToast(it.message))
+                } else {
+                    mviStore.postSideEffect(OpenLectureSideEffect.HandleException(it))
+                }
+            }
     }
 
     fun updateSelectedCellColor(color: TimetableCellColor) {
@@ -146,28 +163,28 @@ class OpenLectureViewModel(
 
     private fun getOpenLectureList(
         search: String = searchQuery,
-    ) {
-//        mutex.withLock {
-//            val newData = getOpenLectureListUseCase(
-//                GetOpenLectureListUseCase.Param(
-//                    lectureOrProfessorName = search,
-//                    major = if (currentState.selectedOpenMajor == "전체") null else currentState.selectedOpenMajor,
-//                    grade = currentState.schoolLevel.query,
-//                ),
-//            ).catch {
-//                postSideEffect(OpenLectureSideEffect.HandleException(it))
-//            }.firstOrNull() ?: return@withLock
-//
-//            reduce {
-//                state.copy(
-//                    isLoading = false,
-//                    openLectureList = newData
-//                        .distinctBy { it.id }
-//                        .toPersistentList(),
-//                )
-//            }
-//            postSideEffect(OpenLectureSideEffect.ScrollToTop)
-//        }
+    ) = viewModelScope.launch {
+        mutex.withLock {
+            getOpenLectureListUseCase(
+                GetOpenLectureListUseCase.Param(
+                    lectureOrProfessorName = search,
+                    major = if (currentState.selectedOpenMajor == "전체") null else currentState.selectedOpenMajor,
+                    grade = currentState.schoolLevel.query,
+                ),
+            ).onSuccess { newData ->
+                mviStore.setState {
+                    copy(
+                        isLoading = false,
+                        openLectureList = newData
+                            .distinctBy { it.id }
+                            .toPersistentList(),
+                    )
+                }
+                mviStore.postSideEffect(OpenLectureSideEffect.ScrollToTop)
+            }.onFailure {
+                mviStore.postSideEffect(OpenLectureSideEffect.HandleException(it))
+            }
+        }
     }
 
     fun showGradeBottomSheet() {

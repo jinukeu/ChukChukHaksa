@@ -9,29 +9,29 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 
 class OpenMajorRepositoryImpl(
-  private val localOpenMajorDataSource: LocalOpenMajorDataSource,
-  private val remoteOpenMajorDataSource: RemoteOpenMajorDataSource,
+    private val localOpenMajorDataSource: LocalOpenMajorDataSource,
+    private val remoteOpenMajorDataSource: RemoteOpenMajorDataSource,
 ) : OpenMajorRepository {
-  override suspend fun getOpenMajorList(): Flow<List<String>> = flow {
-    emit(localOpenMajorDataSource.getLocalOpenMajorList().map { it.name })
+    override suspend fun getOpenMajorList(): Flow<List<String>> = flow {
+        emit(localOpenMajorDataSource.getLocalOpenMajorList().map { it.name })
 
-    val localVersion = localOpenMajorDataSource.getLocalOpenMajorVersion().firstOrNull() ?: 0f
-    val remoteVersion = remoteOpenMajorDataSource.getOpenMajorVersion()
+        val localVersion = localOpenMajorDataSource.getLocalOpenMajorVersion().firstOrNull() ?: 0f
+        val remoteVersion = remoteOpenMajorDataSource.getOpenMajorVersion()
 
-    if (remoteVersion > localVersion) {
-      val remoteOpenMajorList = remoteOpenMajorDataSource.getOpenMajorList()
+        if (remoteVersion > localVersion) {
+            val remoteOpenMajorList = remoteOpenMajorDataSource.getOpenMajorList()
 
-      emit(remoteOpenMajorList)
+            emit(remoteOpenMajorList)
 
-      with(localOpenMajorDataSource) {
-        deleteAllOpenMajors()
-        saveAllOpenMajors(
-          remoteOpenMajorList.mapIndexed { index, major ->
-            OpenMajor(id = index, name = major)
-          },
-        )
-        setLocalOpenMajorVersion(remoteVersion)
-      }
+            with(localOpenMajorDataSource) {
+                deleteAllOpenMajors()
+                saveAllOpenMajors(
+                    remoteOpenMajorList.mapIndexed { index, major ->
+                        OpenMajor(id = index, name = major)
+                    },
+                )
+                setLocalOpenMajorVersion(remoteVersion)
+            }
+        }
     }
-  }
 }

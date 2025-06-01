@@ -6,7 +6,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val localOpenLectureDataSourceModule = module {
-  single<LocalOpenLectureDataSource>{
-    LocalOpenLectureDatasourceImpl(get(named("normalDataStore")), get())
-  }
+    single<LocalOpenLectureDataSource> {
+        LocalOpenLectureDatasourceImpl(get(), get())
+    }
 }

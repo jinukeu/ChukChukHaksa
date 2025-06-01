@@ -49,6 +49,7 @@ import chukchukhaksa.composeapp.generated.resources.word_apply
 import chukchukhaksa.composeapp.generated.resources.word_num_school_level
 import chukchukhaksa.composeapp.generated.resources.word_open_major
 import chukchukhaksa.composeapp.generated.resources.word_school_level
+import com.chukchukhaksa.mobile.common.designsystem.component.SuwikiBackground
 import com.chukchukhaksa.mobile.common.designsystem.component.appbar.SuwikiAppBarWithTextButton
 import com.chukchukhaksa.mobile.common.designsystem.component.bottomsheet.SuwikiBottomSheet
 import com.chukchukhaksa.mobile.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
@@ -165,108 +166,110 @@ fun OpenLectureScreen(
     onClickCustomAdd: () -> Unit = {},
 ) {
 
-    // TODO Collapsing toolbar 적용 필요
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(White),
-    ) {
-        SuwikiAppBarWithTextButton(
-            buttonText = stringResource(Res.string.add_timetable_screen_add_lecture),
-            onClickBack = onClickBack,
-            onClickTextButton = onClickCustomAdd,
-        )
-
+    SuwikiBackground {
+        // TODO Collapsing toolbar 적용 필요
         Column(
             modifier = Modifier
-                .weight(1f),
+                .fillMaxSize()
+                .background(White),
         ) {
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(32.dp),
+            SuwikiAppBarWithTextButton(
+                buttonText = stringResource(Res.string.add_timetable_screen_add_lecture),
+                onClickBack = onClickBack,
+                onClickTextButton = onClickCustomAdd,
             )
-            Column {
-                Row(
-                    modifier = Modifier.padding(horizontal = 24.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    FilterContainer(
-                        filterName = stringResource(Res.string.word_open_major),
-                        value = uiState.selectedOpenMajor,
-                        onClick = { onClickOpenMajorFilterContainer(uiState.selectedOpenMajor) },
-                    )
 
-                    FilterContainer(
-                        filterName = stringResource(Res.string.word_school_level),
-                        value = stringResource(uiState.schoolLevel.stringResId),
-                        onClick = onClickSchoolLevelFilterContainer,
-                    )
-                }
-
-                SuwikiSearchBar(
-                    modifier = Modifier.padding(top = 10.dp),
-                    placeholder = stringResource(Res.string.add_timetable_cell_search_bar_placeholder),
-                    onClickSearchButton = onClickSearchButton,
-                    value = uiState.searchValue,
-                    onClickClearButton = onClickClearButton,
-                    onValueChange = onValueChangeSearch,
-                )
-
-                Text(
-                    modifier = Modifier
-                        .padding(top = 10.dp, end = 20.dp)
-                        .align(Alignment.End),
-                    text = "최근 갱신일: ${uiState.lastUpdatedDate ?: "확인 중"}",
-                    style = SuwikiTheme.typography.body7,
-                    color = Gray95,
-                )
-            }
-            if (uiState.openLectureList.isEmpty() && uiState.isLoading.not()) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Spacer(modifier = Modifier.size(52.dp))
-
-                    Text(
-                        text = stringResource(Res.string.open_lecture_screen_empty_result_title),
-                        style = SuwikiTheme.typography.header4,
-                        color = Gray95,
-                    )
-
-                    Spacer(modifier = Modifier.size(12.dp))
-
-                    Text(
-                        text = stringResource(Res.string.open_lecture_screen_empty_result_description),
-                        style = SuwikiTheme.typography.body5,
-                        textAlign = TextAlign.Center,
-                        color = Gray95,
-                    )
-                }
-            }
-
-            LazyColumn(
+            Column(
                 modifier = Modifier
-                    .fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 24.dp),
-                state = listState,
+                    .weight(1f),
             ) {
-                items(
-                    items = uiState.openLectureList,
-                    key = { it.id },
-                ) { lectureEvaluation ->
-                    with(lectureEvaluation) {
-                        OpenLectureCard(
-                            className = name,
-                            professor = professorName,
-                            cellInfo = originalCellList.toText(),
-                            grade = stringResource(Res.string.word_num_school_level, grade),
-                            classType = type,
-                            openMajor = major,
-                            onClick = { onClickClassInfoCard(this) },
-                            onClickAdd = { onClickCellAdd(this) },
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp),
+                )
+                Column {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 24.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        FilterContainer(
+                            filterName = stringResource(Res.string.word_open_major),
+                            value = uiState.selectedOpenMajor,
+                            onClick = { onClickOpenMajorFilterContainer(uiState.selectedOpenMajor) },
                         )
+
+                        FilterContainer(
+                            filterName = stringResource(Res.string.word_school_level),
+                            value = stringResource(uiState.schoolLevel.stringResId),
+                            onClick = onClickSchoolLevelFilterContainer,
+                        )
+                    }
+
+                    SuwikiSearchBar(
+                        modifier = Modifier.padding(top = 10.dp),
+                        placeholder = stringResource(Res.string.add_timetable_cell_search_bar_placeholder),
+                        onClickSearchButton = onClickSearchButton,
+                        value = uiState.searchValue,
+                        onClickClearButton = onClickClearButton,
+                        onValueChange = onValueChangeSearch,
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 10.dp, end = 20.dp)
+                            .align(Alignment.End),
+                        text = "최근 갱신일: ${uiState.lastUpdatedDate ?: "확인 중"}",
+                        style = SuwikiTheme.typography.body7,
+                        color = Gray95,
+                    )
+                }
+                if (uiState.openLectureList.isEmpty() && uiState.isLoading.not()) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Spacer(modifier = Modifier.size(52.dp))
+
+                        Text(
+                            text = stringResource(Res.string.open_lecture_screen_empty_result_title),
+                            style = SuwikiTheme.typography.header4,
+                            color = Gray95,
+                        )
+
+                        Spacer(modifier = Modifier.size(12.dp))
+
+                        Text(
+                            text = stringResource(Res.string.open_lecture_screen_empty_result_description),
+                            style = SuwikiTheme.typography.body5,
+                            textAlign = TextAlign.Center,
+                            color = Gray95,
+                        )
+                    }
+                }
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 24.dp),
+                    state = listState,
+                ) {
+                    items(
+                        items = uiState.openLectureList,
+                        key = { it.id },
+                    ) { lectureEvaluation ->
+                        with(lectureEvaluation) {
+                            OpenLectureCard(
+                                className = name,
+                                professor = professorName,
+                                cellInfo = originalCellList.toText(),
+                                grade = "${grade}학년",
+                                classType = type,
+                                openMajor = major,
+                                onClick = { onClickClassInfoCard(this) },
+                                onClickAdd = { onClickCellAdd(this) },
+                            )
+                        }
                     }
                 }
             }

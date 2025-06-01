@@ -4,14 +4,21 @@ import com.chukchukhaksa.mobile.data.openlecture.OpenLectureRaw
 import com.chukchukhaksa.mobile.data.openlecture.datasource.RemoteOpenLectureDataSource
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.database.database
+import io.github.aakira.napier.Napier
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 
-class RemoteOpenLectureDataSourceImpl(
-) : RemoteOpenLectureDataSource {
-    private val firebaseDatabase = Firebase.database
+class RemoteOpenLectureDataSourceImpl : RemoteOpenLectureDataSource {
+    private val firebaseDatabase = Firebase
+        .database("https://chukchuk-haksa-default-rtdb.asia-southeast1.firebasedatabase.app")
+        .apply {
+            setLoggingEnabled(true)
+        }
 
-    override suspend fun getOpenLectureListVersion(): Long {
-        return firebaseDatabase
+    override suspend fun getOpenLectureListVersion(): Long = withContext(Dispatchers.IO) {
+        firebaseDatabase
             .reference(DATABASE_OPEN_LECTURE_VERSION)
             .valueEvents
             .first()
@@ -21,23 +28,29 @@ class RemoteOpenLectureDataSourceImpl(
     }
 
 
-    override suspend fun getOpenLectureList(): List<OpenLectureRaw> = firebaseDatabase
-        .reference(DATABASE_OPEN_LECTURE)
-        .valueEvents
-        .first()
-        .children
-        .mapIndexed { index, dataSnapshot ->
-            val data = dataSnapshot.value as HashMap<*, *>
-            OpenLectureRaw(
-                number = index.toLong() + 1,
-                major = data[FIELD_MAJOR].toString(),
-                grade = data[FIELD_GRADE].toString().toIntOrNull() ?: 1,
-                className = data[FIELD_CLASS_NAME].toString(),
-                classification = data[FIELD_CLASSIFICATION].toString(),
-                professor = data[FIELD_PROFESSOR]?.toString() ?: DEFAULT,
-                time = data[FIELD_TIME]?.toString() ?: DEFAULT,
-            )
-        }
+    override suspend fun getOpenLectureList(): List<OpenLectureRaw> = withContext(Dispatchers.IO) {
+        Napier.d(message = "getOpenLectureList", tag = "getOpenLectureList()")
+        val result = firebaseDatabase
+            .reference(DATABASE_OPEN_LECTURE)
+            .valueEvents
+            .first()
+            .children
+            .mapIndexed { index, dataSnapshot ->
+                val data = dataSnapshot.value as HashMap<*, *>
+                OpenLectureRaw(
+                    number = index.toLong() + 1,
+                    major = data[FIELD_MAJOR].toString(),
+                    grade = data[FIELD_GRADE].toString().toIntOrNull() ?: 1,
+                    className = data[FIELD_CLASS_NAME].toString(),
+                    classification = data[FIELD_CLASSIFICATION].toString(),
+                    professor = data[FIELD_PROFESSOR]?.toString() ?: DEFAULT,
+                    time = data[FIELD_TIME]?.toString() ?: DEFAULT,
+                )
+            }
+        Napier.d(message = "getOpenLectureList", tag = "getOpenLectureList result: $result")
+
+        result
+    }
 
 
     companion object {

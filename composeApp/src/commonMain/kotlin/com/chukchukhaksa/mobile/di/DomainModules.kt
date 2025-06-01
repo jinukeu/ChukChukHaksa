@@ -39,6 +39,6 @@ val domainModule = module {
     factory { SetTimetableCellTypeUseCase(get()) }
 
     // Open lecture use cases
-    factory { GetOpenLectureListUseCase() }
-    factory { UpdateOpenLectureIfNeedUseCase() }
+    factory { GetOpenLectureListUseCase(get()) }
+    factory { UpdateOpenLectureIfNeedUseCase(get())}
 }

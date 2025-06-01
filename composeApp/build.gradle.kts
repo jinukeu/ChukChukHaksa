@@ -64,6 +64,7 @@ kotlin {
 
             implementation(libs.kmp.firebase.database)
             implementation(libs.kmp.firebase.config)
+            implementation(libs.napier)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -104,6 +105,10 @@ android {
 
     dependencies {
         coreLibraryDesugaring(libs.desugar.jdk.libs)
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

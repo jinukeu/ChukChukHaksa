@@ -26,6 +26,7 @@ kotlin-firebase = "2.1.0"
 firebase-common = "21.0.0"
 google-service = "4.4.2"
 desugar-jdk-libs = "2.1.5"
+napier = "2.7.1"
 
 [libraries]
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -63,6 +64,8 @@ kmp-firebase-config = { group = "dev.gitlive", name = "firebase-config", version
 firebase-common = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebase-common" }
 
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
+
+napier = { group = "io.github.aakira", name = "napier", version.ref = "napier" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

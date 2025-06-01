@@ -46,9 +46,6 @@ class OpenLectureViewModel(
         if (isFirstVisit) {
             mviStore.setState { copy(isLoading = true) }
             updateOpenLectureIfNeedUseCase()
-                .onFailure {
-                    Napier.d("${it.message}", tag = "OpenLectureViewModel")
-                }
             val lastUpdated = openLectureRepository.getLastUpdatedDate()
             mviStore.setState {
                 copy(

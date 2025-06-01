@@ -17,7 +17,7 @@ class RemoteOpenLectureDataSourceImpl : RemoteOpenLectureDataSource {
             setLoggingEnabled(true)
         }
 
-    override suspend fun getOpenLectureListVersion(): Long = withContext(Dispatchers.IO) {
+    override suspend fun getOpenLectureListVersion(): Long =
         firebaseDatabase
             .reference(DATABASE_OPEN_LECTURE_VERSION)
             .valueEvents
@@ -25,18 +25,15 @@ class RemoteOpenLectureDataSourceImpl : RemoteOpenLectureDataSource {
             .value
             .toString()
             .toLongOrNull() ?: 0
-    }
 
-
-    override suspend fun getOpenLectureList(): List<OpenLectureRaw> = withContext(Dispatchers.IO) {
-        Napier.d(message = "getOpenLectureList", tag = "getOpenLectureList()")
-        val result = firebaseDatabase
+    override suspend fun getOpenLectureList(): List<OpenLectureRaw> =
+        firebaseDatabase
             .reference(DATABASE_OPEN_LECTURE)
             .valueEvents
             .first()
             .children
             .mapIndexed { index, dataSnapshot ->
-                val data = dataSnapshot.value as HashMap<*, *>
+                val data = dataSnapshot.value as Map<*, *>
                 OpenLectureRaw(
                     number = index.toLong() + 1,
                     major = data[FIELD_MAJOR].toString(),
@@ -47,10 +44,6 @@ class RemoteOpenLectureDataSourceImpl : RemoteOpenLectureDataSource {
                     time = data[FIELD_TIME]?.toString() ?: DEFAULT,
                 )
             }
-        Napier.d(message = "getOpenLectureList", tag = "getOpenLectureList result: $result")
-
-        result
-    }
 
 
     companion object {

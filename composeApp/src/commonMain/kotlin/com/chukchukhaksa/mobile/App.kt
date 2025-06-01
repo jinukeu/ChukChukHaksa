@@ -6,9 +6,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.compose.NavHost
 import com.chukchukhaksa.mobile.common.designsystem.theme.SuwikiTheme
+import com.chukchukhaksa.mobile.common.kmp.isDebug
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.OpenMajorRoute
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.openMajorNavGraph
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.timetableNavGraph
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -30,6 +33,12 @@ fun App(
 
             LaunchedEffect(key1 = Unit) {
 //            viewModel.checkUpdateMandatory(context.versionCode)
+            }
+
+            LaunchedEffect(Unit) {
+                if (isDebug) {
+                    Napier.base(DebugAntilog())
+                }
             }
 
             Scaffold(

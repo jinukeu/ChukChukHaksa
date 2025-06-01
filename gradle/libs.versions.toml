@@ -12,6 +12,7 @@ androidx-lifecycle = "2.8.4"
 androidx-testExt = "1.2.1"
 composeMultiplatform = "1.8.0"
 datastorePreferences = "1.1.7"
+firebaseDatabaseKtx = "21.0.0"
 junit = "4.13.2"
 kotlin = "2.1.20"
 kotlinx-immutable = "0.3.8"
@@ -21,9 +22,15 @@ jetbrains-androidx-navigation = "2.9.0-beta01"
 koin = "4.1.0-Beta10"
 androidx-room = "2.7.1"
 ksp = "2.1.20-1.0.32"
+kotlin-firebase = "2.1.0"
+firebase-common = "21.0.0"
+google-service = "4.4.2"
+desugar-jdk-libs = "2.1.5"
 
 [libraries]
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+firebase-config-ktx = { module = "com.google.firebase:firebase-config-ktx", version.ref = "firebaseDatabaseKtx" }
+firebase-database-ktx = { module = "com.google.firebase:firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -49,7 +56,13 @@ koin-compose-viewmodel-navigation = { group = "io.insert-koin", name = "koin-com
 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled" } # 모든 플랫폼에서 일관된 SQLite 드라이버 제공
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled" }
+
+kmp-firebase-database = { group = "dev.gitlive", name = "firebase-database", version.ref = "kotlin-firebase" }
+kmp-firebase-config = { group = "dev.gitlive", name = "firebase-config", version.ref = "kotlin-firebase" }
+firebase-common = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebase-common" }
+
+desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -60,3 +73,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
+googleService = { id = "com.google.gms.google-services", version.ref = "google-service" }

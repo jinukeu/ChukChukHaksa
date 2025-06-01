@@ -23,7 +23,7 @@ fun App(
 ) {
     SuwikiTheme {
         KoinContext {
-            //        val uiState = viewModel.collectAsState().value
+//        val uiState = viewModel.collectAsState().value
             val uriHandler = LocalUriHandler.current
 //        viewModel.collectSideEffect { sideEffect ->
 //            when (sideEffect) {
@@ -63,7 +63,7 @@ fun App(
 
                         timetableNavGraph(
                             padding = innerPadding,
-                            argumentName = "TODO OpenMajorRoute.ARGUMENT_NAME", // TODO
+                            argumentName = OpenMajorRoute.ARGUMENT_NAME,
                             popBackStack = navigator::popBackStackIfNotHome,
                             navigateTimetableEditor = navigator::navigateTimetableEditor,
                             navigateTimetableList = navigator::navigateTimetableList,

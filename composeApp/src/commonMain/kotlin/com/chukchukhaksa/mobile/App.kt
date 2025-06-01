@@ -63,7 +63,7 @@ fun App(
 
                         timetableNavGraph(
                             padding = innerPadding,
-                            argumentName = OpenMajorRoute.ARGUMENT_NAME, // TODO
+                            argumentName = OpenMajorRoute.ARGUMENT_NAME,
                             popBackStack = navigator::popBackStackIfNotHome,
                             navigateTimetableEditor = navigator::navigateTimetableEditor,
                             navigateTimetableList = navigator::navigateTimetableList,

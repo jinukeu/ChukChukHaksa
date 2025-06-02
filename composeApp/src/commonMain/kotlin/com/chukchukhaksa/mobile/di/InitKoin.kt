@@ -10,6 +10,7 @@ import com.chukchukhaksa.mobile.local.datasource.openlecture.di.localOpenLecture
 import com.chukchukhaksa.mobile.local.datasource.openmajor.di.localOpenMajorDataSourceModule
 import com.chukchukhaksa.mobile.local.datasource.timetable.di.localTimetableDataSourceModule
 import com.chukchukhaksa.mobile.local.datastore.di.dataStoreModule
+import com.chukchukhaksa.mobile.remote.config.remoteAppConfigDataSourceModule
 import com.chukchukhaksa.mobile.remote.di.firebaseDatabaseModule
 import com.chukchukhaksa.mobile.remote.timetable.remoteOpenLectureDataSourceModule
 import org.koin.core.context.startKoin
@@ -34,6 +35,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
             openLectureRepositoryModule,
             presentationModule,
             firebaseDatabaseModule,
+            remoteAppConfigDataSourceModule,
         )
     }
 }

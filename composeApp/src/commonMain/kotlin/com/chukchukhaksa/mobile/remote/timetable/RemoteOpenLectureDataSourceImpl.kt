@@ -3,6 +3,7 @@ package com.chukchukhaksa.mobile.remote.timetable
 import com.chukchukhaksa.mobile.data.openlecture.OpenLectureRaw
 import com.chukchukhaksa.mobile.data.openlecture.datasource.RemoteOpenLectureDataSource
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.database.FirebaseDatabase
 import dev.gitlive.firebase.database.database
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.Dispatchers
@@ -10,12 +11,9 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
-class RemoteOpenLectureDataSourceImpl : RemoteOpenLectureDataSource {
-    private val firebaseDatabase = Firebase
-        .database("https://chukchuk-haksa-default-rtdb.asia-southeast1.firebasedatabase.app")
-        .apply {
-            setLoggingEnabled(true)
-        }
+class RemoteOpenLectureDataSourceImpl(
+    private val firebaseDatabase: FirebaseDatabase,
+) : RemoteOpenLectureDataSource {
 
     override suspend fun getOpenLectureListVersion(): Long =
         firebaseDatabase

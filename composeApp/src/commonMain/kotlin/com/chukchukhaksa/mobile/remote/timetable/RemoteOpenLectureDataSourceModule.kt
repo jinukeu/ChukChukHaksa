@@ -4,5 +4,5 @@ import com.chukchukhaksa.mobile.data.openlecture.datasource.RemoteOpenLectureDat
 import org.koin.dsl.module
 
 val remoteOpenLectureDataSourceModule = module {
-  single<RemoteOpenLectureDataSource> { RemoteOpenLectureDataSourceImpl() }
+  single<RemoteOpenLectureDataSource> { RemoteOpenLectureDataSourceImpl(get()) }
 }

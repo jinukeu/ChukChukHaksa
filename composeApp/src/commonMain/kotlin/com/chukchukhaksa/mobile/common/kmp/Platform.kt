@@ -1,7 +1,8 @@
 package com.chukchukhaksa.mobile.common.kmp
 
-interface Platform {
-    val name: String
+enum class Platform {
+    Android,
+    iOS
 }
 
 expect fun getPlatform(): Platform

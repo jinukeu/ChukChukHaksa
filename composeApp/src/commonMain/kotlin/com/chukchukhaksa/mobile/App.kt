@@ -3,8 +3,19 @@ package com.chukchukhaksa.mobile
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
+import chukchukhaksa.composeapp.generated.resources.Res
+import chukchukhaksa.composeapp.generated.resources.dialog_network_body
+import chukchukhaksa.composeapp.generated.resources.dialog_network_header
+import chukchukhaksa.composeapp.generated.resources.dialog_update_mandatory_body
+import chukchukhaksa.composeapp.generated.resources.dialog_update_mandatory_header
+import chukchukhaksa.composeapp.generated.resources.open_lecture_success_add_cell_toast
+import chukchukhaksa.composeapp.generated.resources.word_confirm
+import com.chukchukhaksa.mobile.common.designsystem.component.dialog.SuwikiDialog
+import com.chukchukhaksa.mobile.common.designsystem.component.toast.SuwikiToast
 import com.chukchukhaksa.mobile.common.designsystem.theme.SuwikiTheme
 import com.chukchukhaksa.mobile.common.kmp.isDebug
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.OpenMajorRoute
@@ -12,6 +23,8 @@ import com.chukchukhaksa.mobile.presentation.openmajor.navigation.openMajorNavGr
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.timetableNavGraph
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
+import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -23,7 +36,7 @@ fun App(
 ) {
     SuwikiTheme {
         KoinContext {
-//        val uiState = viewModel.collectAsState().value
+            val uiState = viewModel.mviStore.uiState.collectAsState().value
             val uriHandler = LocalUriHandler.current
 //        viewModel.collectSideEffect { sideEffect ->
 //            when (sideEffect) {
@@ -75,30 +88,30 @@ fun App(
                         )
                     }
 
-//                if (uiState.showNetworkErrorDialog) {
-//                    SuwikiDialog(
-//                        headerText = stringResource(R.string.dialog_network_header),
-//                        bodyText = stringResource(R.string.dialog_network_body),
-//                        confirmButtonText = stringResource(id = com.suwiki.presentation.common.ui.R.string.word_confirm),
-//                        onDismissRequest = viewModel::hideNetworkErrorDialog,
-//                        onClickConfirm = viewModel::hideNetworkErrorDialog,
-//                    )
-//                }
-//
-//                if (uiState.showUpdateMandatoryDialog) {
-//                    SuwikiDialog(
-//                        headerText = stringResource(R.string.dialog_update_mandatory_header),
-//                        bodyText = stringResource(R.string.dialog_update_mandatory_body),
-//                        confirmButtonText = stringResource(id = com.suwiki.presentation.common.ui.R.string.word_confirm),
-//                        onDismissRequest = {},
-//                        onClickConfirm = viewModel::openPlayStoreSite,
-//                    )
-//                }
-//
-//                SuwikiToast(
-//                    visible = uiState.toastVisible,
-//                    message = uiState.toastMessage,
-//                )
+                    if (uiState.showNetworkErrorDialog) {
+                        SuwikiDialog(
+                            headerText = stringResource(Res.string.dialog_network_header),
+                            bodyText = stringResource(Res.string.dialog_network_body),
+                            confirmButtonText = stringResource(Res.string.word_confirm),
+                            onDismissRequest = viewModel::hideNetworkErrorDialog,
+                            onClickConfirm = viewModel::hideNetworkErrorDialog,
+                        )
+                    }
+
+                    if (uiState.showUpdateMandatoryDialog) {
+                        SuwikiDialog(
+                            headerText = stringResource(Res.string.dialog_update_mandatory_header),
+                            bodyText = stringResource(Res.string.dialog_update_mandatory_body),
+                            confirmButtonText = stringResource(Res.string.word_confirm),
+                            onDismissRequest = {},
+                            onClickConfirm = viewModel::openPlayStoreSite,
+                        )
+                    }
+
+                    SuwikiToast(
+                        visible = uiState.toastVisible,
+                        message = uiState.toastMessage,
+                    )
                 },
             )
         }

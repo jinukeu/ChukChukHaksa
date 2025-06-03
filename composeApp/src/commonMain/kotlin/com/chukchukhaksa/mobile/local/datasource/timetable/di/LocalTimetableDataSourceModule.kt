@@ -8,8 +8,4 @@ val localTimetableDataSourceModule = module {
     single<LocalTimetableDataSource> {
         LocalTimetableDatasourceImpl(get(), get())
     }
-
-//  single<LocalOpenLectureDataSource> {
-//    LocalOpenLectureDatasourceImpl(get(named("normalDataStore")), get())
-//  }
 }

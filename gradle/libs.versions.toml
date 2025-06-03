@@ -66,6 +66,8 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled" }
 
 kmp-firebase-database = { group = "dev.gitlive", name = "firebase-database", version.ref = "kotlin-firebase" }
 kmp-firebase-config = { group = "dev.gitlive", name = "firebase-config", version.ref = "kotlin-firebase" }
+kmp-firebase-crashlytics = { module = "dev.gitlive:firebase-crashlytics", version.ref = "kotlin-firebase" }
+kmp-firebase-analytics = { group = "dev.gitlive", name = "firebase-analytics", version.ref = "kotlin-firebase" }
 firebase-common = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebase-common" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }

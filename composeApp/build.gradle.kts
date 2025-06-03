@@ -38,7 +38,7 @@ kotlin {
             implementation(libs.firebase.common)
             implementation(libs.firebase.database.ktx)
             implementation(libs.firebase.config.ktx)
-            implementation(libs.firebase.bom)
+            implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.crashlytics.ktx)
             implementation(libs.firebase.analytics.ktx)
         }
@@ -68,6 +68,8 @@ kotlin {
 
             implementation(libs.kmp.firebase.database)
             implementation(libs.kmp.firebase.config)
+            implementation(libs.kmp.firebase.crashlytics)
+            implementation(libs.kmp.firebase.analytics)
             implementation(libs.napier)
         }
         commonTest.dependencies {

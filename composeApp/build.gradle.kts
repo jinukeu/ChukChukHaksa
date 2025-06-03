@@ -69,6 +69,7 @@ kotlin {
             implementation(libs.kmp.firebase.database)
             implementation(libs.kmp.firebase.config)
             implementation(libs.kmp.firebase.crashlytics)
+            implementation(libs.kmp.firebase.analytics)
             implementation(libs.napier)
         }
         commonTest.dependencies {

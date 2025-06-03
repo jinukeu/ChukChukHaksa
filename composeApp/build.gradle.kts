@@ -72,6 +72,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }
@@ -129,4 +130,3 @@ fun DependencyHandlerScope.kspKmp(
     add("kspIosArm64", artifact)
     add("kspIosSimulatorArm64", artifact)
 }
-

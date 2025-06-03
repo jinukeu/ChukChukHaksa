@@ -1,5 +1,6 @@
 package com.chukchukhaksa.mobile.di
 
+import com.chukchukhaksa.mobile.domain.config.usecase.CheckNeedForceUpdateUseCase
 import com.chukchukhaksa.mobile.domain.openmajor.usecase.GetOpenMajorListUseCase
 import com.chukchukhaksa.mobile.domain.timetable.usecase.DeleteTimetableCellUseCase
 import com.chukchukhaksa.mobile.domain.timetable.usecase.DeleteTimetableUseCase
@@ -41,4 +42,6 @@ val domainModule = module {
     // Open lecture use cases
     factory { GetOpenLectureListUseCase(get()) }
     factory { UpdateOpenLectureIfNeedUseCase(get())}
+
+    factory { CheckNeedForceUpdateUseCase(get())}
 }

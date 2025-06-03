@@ -1,5 +1,6 @@
 package com.chukchukhaksa.mobile.di
 
+import com.chukchukhaksa.mobile.data.config.di.appConfigRepositoryModule
 import com.chukchukhaksa.mobile.data.openlecture.di.openLectureRepositoryModule
 import com.chukchukhaksa.mobile.data.openmajor.di.openMajorRepositoryModule
 import com.chukchukhaksa.mobile.data.timetable.di.timetableRepositoryModule
@@ -36,6 +37,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
             presentationModule,
             firebaseDatabaseModule,
             remoteAppConfigDataSourceModule,
+            appConfigRepositoryModule,
         )
     }
 }

@@ -25,6 +25,7 @@ import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
+import kotlinx.coroutines.delay
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -45,7 +46,8 @@ fun App(
 //        }
 
             LaunchedEffect(key1 = Unit) {
-//            viewModel.checkUpdateMandatory(context.versionCode)
+                delay(500)
+                viewModel.checkNeedForceUpdate()
             }
 
             LaunchedEffect(Unit) {

@@ -29,9 +29,7 @@ class OpenLectureViewModel(
 
     private val mutex: Mutex = Mutex()
 
-    val mviStore: MviStore<OpenLectureState, OpenLectureSideEffect> = mviStore(
-        OpenLectureState(),
-    )
+    val mviStore: MviStore<OpenLectureState, OpenLectureSideEffect> = mviStore(OpenLectureState())
 
     private val currentState
         get() = mviStore.uiState.value
@@ -110,7 +108,7 @@ class OpenLectureViewModel(
     }
 
     fun updateSelectedCellColor(color: TimetableCellColor) {
-        mviStore.setState{ copy(selectedTimetableCellColor = color) }
+        mviStore.setState { copy(selectedTimetableCellColor = color) }
     }
 
     fun showSelectColorBottomSheet(openLecture: OpenLecture) {
@@ -124,7 +122,7 @@ class OpenLectureViewModel(
     }
 
     fun hideSelectColorBottomSheet() {
-        mviStore.setState{ copy(showSelectCellColorBottomSheet = false) }
+        mviStore.setState { copy(showSelectCellColorBottomSheet = false) }
     }
 
     fun searchOpenLecture(search: String) {
@@ -133,7 +131,7 @@ class OpenLectureViewModel(
     }
 
     fun updateSearchValue(searchValue: String) {
-        mviStore.setState{ copy(searchValue = searchValue) }
+        mviStore.setState { copy(searchValue = searchValue) }
     }
 
     fun updateSchoolLevelPosition(schoolLevel: SchoolLevel) {
@@ -149,7 +147,7 @@ class OpenLectureViewModel(
     fun updateSelectedOpenMajor(openMajor: String) {
         if (openMajor == mviStore.uiState.value.selectedOpenMajor) return
 
-        mviStore.setState{
+        mviStore.setState {
             copy(
                 selectedOpenMajor = openMajor,
             )
@@ -184,11 +182,11 @@ class OpenLectureViewModel(
     }
 
     fun showGradeBottomSheet() {
-        mviStore.setState{copy(showSchoolLevelBottomSheet = true) }
+        mviStore.setState { copy(showSchoolLevelBottomSheet = true) }
     }
 
     fun hideGradeBottomSheet() {
-        mviStore.setState{ copy(showSchoolLevelBottomSheet = false) }
+        mviStore.setState { copy(showSchoolLevelBottomSheet = false) }
     }
 
     fun popBackStack() {

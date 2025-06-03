@@ -20,8 +20,7 @@ class OpenMajorViewModel(
     private val openLectureRepository: OpenLectureRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    val mviStore: MviStore<OpenMajorState, OpenMajorSideEffect> =
-        mviStore(OpenMajorState())
+    val mviStore: MviStore<OpenMajorState, OpenMajorSideEffect> = mviStore(OpenMajorState())
 
     private var selectedOpenMajor = savedStateHandle[OpenMajorRoute.ARGUMENT_NAME] ?: "전체"
     private val allOpenMajorList = mutableListOf<String>()

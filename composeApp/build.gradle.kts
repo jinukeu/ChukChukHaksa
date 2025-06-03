@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.googleService)
+    alias(libs.plugins.firebaseCrashlytics)
 }
 
 kotlin {
@@ -39,6 +40,7 @@ kotlin {
             implementation(libs.firebase.config.ktx)
             implementation(libs.firebase.bom)
             implementation(libs.firebase.crashlytics.ktx)
+            implementation(libs.firebase.analytics.ktx)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

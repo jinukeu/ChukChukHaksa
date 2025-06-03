@@ -24,8 +24,8 @@ androidx-room = "2.7.1"
 ksp = "2.1.20-1.0.32"
 kotlin-firebase = "2.1.0"
 firebase-common = "21.0.0"
-firebase-bom = "32.7.0"
-firebase-crashlytics-ktx = "18.5.1"
+firebase-bom = "33.2.0"
+firebaseCrashlytics = "2.9.9"
 google-service = "4.4.2"
 desugar-jdk-libs = "2.1.5"
 napier = "2.7.1"
@@ -65,7 +65,8 @@ kmp-firebase-database = { group = "dev.gitlive", name = "firebase-database", ver
 kmp-firebase-config = { group = "dev.gitlive", name = "firebase-config", version.ref = "kotlin-firebase" }
 firebase-common = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebase-common" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
-firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebase-crashlytics-ktx" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 
 
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
@@ -82,3 +83,4 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "androidx-room" }
 googleService = { id = "com.google.gms.google-services", version.ref = "google-service" }
+firebaseCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }

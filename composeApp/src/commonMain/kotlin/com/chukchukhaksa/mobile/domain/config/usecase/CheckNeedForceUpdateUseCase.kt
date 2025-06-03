@@ -7,13 +7,24 @@ import com.chukchukhaksa.mobile.domain.config.repository.AppConfigRepository
 class CheckNeedForceUpdateUseCase(
     private val appConfigRepository: AppConfigRepository
 ) {
-    suspend operator fun invoke(platform: Platform, currentVersion: String): Result<Boolean> = runCatchingIgnoreCancelled {
+    suspend operator fun invoke(platform: Platform, currentVersion: String): Result<ForceUpdateInfo> = runCatchingIgnoreCancelled {
         val minVersion = when (platform) {
             Platform.Android -> appConfigRepository.getAndroidMinVersion()
-            Platform.iOS -> appConfigRepository.getIOSMinVersion()
+            Platform.IOS -> appConfigRepository.getIOSMinVersion()
         }
         
-        compareVersions(currentVersion, minVersion) < 0
+        val needForceUpdate = compareVersions(currentVersion, minVersion) < 0
+
+        if (needForceUpdate.not()) {
+            return@runCatchingIgnoreCancelled ForceUpdateInfo(needForceUpdate = false)
+        }
+
+        val storeUrl = when (platform) {
+            Platform.Android -> appConfigRepository.getGoogleStoreUrl()
+            Platform.IOS -> appConfigRepository.getAppleStoreUrl()
+        }
+
+        ForceUpdateInfo(needForceUpdate = true, storeUrl = storeUrl)
     }
     
     private fun compareVersions(currentVersion: String, minVersion: String): Int {
@@ -34,4 +45,9 @@ class CheckNeedForceUpdateUseCase(
         
         return 0
     }
+
+    data class ForceUpdateInfo(
+        val needForceUpdate: Boolean,
+        val storeUrl: String? = null,
+    )
 }

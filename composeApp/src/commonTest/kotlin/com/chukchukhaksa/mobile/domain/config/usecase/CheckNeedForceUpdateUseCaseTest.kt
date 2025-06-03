@@ -51,7 +51,7 @@ class CheckNeedForceUpdateUseCaseTest {
     fun shouldHandleIOSPlatformCorrectly() = runTest {
         mockRepository.iosMinVersion = "2.1.0"
 
-        val result = useCase(Platform.iOS, "2.0.0").getOrThrow()
+        val result = useCase(Platform.IOS, "2.0.0").getOrThrow()
 
         assertTrue(result)
     }

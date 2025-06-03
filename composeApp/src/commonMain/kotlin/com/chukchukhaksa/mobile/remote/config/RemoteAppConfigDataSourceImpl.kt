@@ -22,8 +22,24 @@ class RemoteAppConfigDataSourceImpl(
         .value
         .toString()
 
+    override suspend fun getAppleStoreUrl(): String = firebaseDatabase
+        .reference(DATABASE_APPLE_STORE_URL)
+        .valueEvents
+        .first()
+        .value
+        .toString()
+
+    override suspend fun getGoogleStoreUrl(): String = firebaseDatabase
+        .reference(DATABASE_GOOGLE_STORE_URL)
+        .valueEvents
+        .first()
+        .value
+        .toString()
+
     companion object {
         private const val DATABASE_MIN_IOS_VERSION = "minIOSVersion"
         private const val DATABASE_MIN_ANDROID_VERSION = "minAndroidVersion"
+        private const val DATABASE_APPLE_STORE_URL = "appleStoreUrl"
+        private const val DATABASE_GOOGLE_STORE_URL = "googleStoreUrl"
     }
 }

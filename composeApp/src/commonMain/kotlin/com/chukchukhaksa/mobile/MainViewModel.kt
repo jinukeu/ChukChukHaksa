@@ -23,6 +23,7 @@ class MainViewModel(
 
     private val mutex = Mutex()
     private var isFirstVisit: Boolean = true
+    private var storeUrl: String? = null
 
     fun checkNeedForceUpdate() = viewModelScope.launch {
         if (isFirstVisit.not()) return@launch
@@ -30,8 +31,11 @@ class MainViewModel(
         checkNeedForceUpdateUseCase(
             platform = getPlatform(),
             currentVersion = getAppVersionName(),
-        ).onSuccess {
-            Napier.d("Force update ${if(it) "needed" else "not needed"}")
+        ).onSuccess { (needForceUpdate, storeUrl) ->
+            if (needForceUpdate.not()) return@onSuccess
+            this@MainViewModel.storeUrl = storeUrl
+
+            mviStore.setState { copy(showForceUpdateDialog = true) }
         }.onFailure {
             Napier.e("Error checking force update", it)
         }
@@ -39,7 +43,11 @@ class MainViewModel(
         isFirstVisit = false
     }
 
-    fun openPlayStoreSite() = mviStore.postSideEffect(MainSideEffect.OpenPlayStoreSite)
+    fun openAppStore() {
+        storeUrl?.let {
+            mviStore.postSideEffect(MainSideEffect.OpenUrl(it))
+        }
+    }
 
     fun onShowToast(msg: String) {
         viewModelScope.launch {

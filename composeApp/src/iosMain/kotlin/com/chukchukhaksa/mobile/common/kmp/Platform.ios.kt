@@ -1,3 +1,3 @@
 package com.chukchukhaksa.mobile.common.kmp
 
-actual fun getPlatform(): Platform = Platform.iOS
+actual fun getPlatform(): Platform = Platform.IOS

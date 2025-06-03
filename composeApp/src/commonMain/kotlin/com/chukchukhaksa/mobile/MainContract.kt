@@ -4,9 +4,9 @@ data class MainState(
   val toastMessage: String = "",
   val toastVisible: Boolean = false,
   val showNetworkErrorDialog: Boolean = false,
-  val showUpdateMandatoryDialog: Boolean = false,
+  val showForceUpdateDialog: Boolean = false,
 )
 
 sealed interface MainSideEffect {
-  data object OpenPlayStoreSite : MainSideEffect
+  data class OpenUrl(val url: String) : MainSideEffect
 }

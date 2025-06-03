@@ -13,4 +13,12 @@ class AppConfigRepositoryImpl(
     override suspend fun getIOSMinVersion(): String {
         return remoteAppConfigDataSource.getIOSMinVersion()
     }
+
+    override suspend fun getAppleStoreUrl(): String {
+        return remoteAppConfigDataSource.getAppleStoreUrl()
+    }
+
+    override suspend fun getGoogleStoreUrl(): String {
+        return remoteAppConfigDataSource.getGoogleStoreUrl()
+    }
 }

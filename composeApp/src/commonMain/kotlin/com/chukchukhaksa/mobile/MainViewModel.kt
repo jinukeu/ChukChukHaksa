@@ -2,6 +2,7 @@ package com.chukchukhaksa.mobile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chukchukhaksa.mobile.common.extension.record
 import com.chukchukhaksa.mobile.common.kmp.exception.CrashReporter
 import com.chukchukhaksa.mobile.common.kmp.getAppVersionName
 import com.chukchukhaksa.mobile.common.kmp.getPlatform
@@ -65,7 +66,7 @@ class MainViewModel(
 //            is ConnectException -> { mviStore.setState { copy(showNetworkErrorDialog = true) } }
             else -> {
                 onShowToast(throwable.message ?: UnknownException().message)
-                CrashReporter.recordException(throwable)
+                throwable.record()
             }
         }
     }

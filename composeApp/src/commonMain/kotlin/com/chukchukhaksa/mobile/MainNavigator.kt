@@ -12,6 +12,7 @@ import com.chukchukhaksa.mobile.presentation.timetable.navigation.navigateCellEd
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.navigateOpenLecture
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.navigateTimetableEditor
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.navigateTimetableList
+import com.chukchukhaksa.mobile.presentation.web.navigation.navigateWeb
 
 class MainNavigator(
     val navController: NavHostController,
@@ -36,6 +37,38 @@ class MainNavigator(
 
     fun navigateOpenLecture() {
         navController.navigateOpenLecture()
+    }
+
+    fun navigateWeb() {
+        navController.navigateWeb()
+    }
+
+    fun navigateToTab(route: String) {
+        when (route) {
+            TimetableRoute.route -> {
+                if (!isSameCurrentDestination(TimetableRoute.route)) {
+                    navController.navigate(TimetableRoute.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            }
+
+            "web" -> {
+                if (!isSameCurrentDestination("web")) {
+                    navController.navigate("web") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            }
+        }
     }
 
     fun popBackStackIfNotHome() {

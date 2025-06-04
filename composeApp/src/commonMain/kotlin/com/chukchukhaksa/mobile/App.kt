@@ -5,12 +5,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import chukchukhaksa.composeapp.generated.resources.Res
 import chukchukhaksa.composeapp.generated.resources.dialog_network_body
 import chukchukhaksa.composeapp.generated.resources.dialog_network_header
 import chukchukhaksa.composeapp.generated.resources.dialog_update_mandatory_body
 import chukchukhaksa.composeapp.generated.resources.dialog_update_mandatory_header
 import chukchukhaksa.composeapp.generated.resources.word_confirm
+import com.chukchukhaksa.mobile.common.designsystem.component.bottomnavigation.SuwikiBottomNavigationBar
+import com.chukchukhaksa.mobile.common.designsystem.component.bottomnavigation.getBottomNavigationItems
 import com.chukchukhaksa.mobile.common.designsystem.component.dialog.SuwikiDialog
 import com.chukchukhaksa.mobile.common.designsystem.component.toast.SuwikiToast
 import com.chukchukhaksa.mobile.common.designsystem.theme.SuwikiTheme
@@ -18,6 +21,7 @@ import com.chukchukhaksa.mobile.common.ui.collectWithLifecycle
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.OpenMajorRoute
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.openMajorNavGraph
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.timetableNavGraph
+import com.chukchukhaksa.mobile.presentation.web.navigation.webNavGraph
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
@@ -32,6 +36,9 @@ fun App(
         KoinContext {
             val uiState = viewModel.mviStore.uiState.collectAsState().value
             val uriHandler = LocalUriHandler.current
+            val navBackStackEntry by navigator.navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route ?: ""
+
             viewModel.mviStore.sideEffects.collectWithLifecycle { sideEffect ->
                 when (sideEffect) {
                     is MainSideEffect.OpenUrl -> uriHandler.openUri(sideEffect.url)
@@ -44,6 +51,20 @@ fun App(
 
             Scaffold(
                 modifier = modifier,
+                bottomBar = {
+                    val bottomNavigationItems = getBottomNavigationItems()
+                    SuwikiBottomNavigationBar(
+                        items = bottomNavigationItems,
+                        selectedRoute = when {
+                            currentRoute.startsWith("timetable") -> "timetable"
+                            currentRoute.startsWith("web") -> "web"
+                            else -> "timetable"
+                        },
+                        onItemClick = { route ->
+                            navigator.navigateToTab(route)
+                        }
+                    )
+                },
                 content = { innerPadding ->
                     NavHost(
                         navController = navigator.navController,
@@ -74,6 +95,8 @@ fun App(
                             navigateOpenMajor = navigator::navigateOpenMajor,
                             navigateCellEditor = navigator::navigateCellEditor,
                         )
+
+                        webNavGraph()
                     }
 
                     if (uiState.showNetworkErrorDialog) {

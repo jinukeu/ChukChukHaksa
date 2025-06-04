@@ -1,7 +1,10 @@
 package com.chukchukhaksa.mobile
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.compose.NavHost
@@ -22,6 +25,9 @@ import com.chukchukhaksa.mobile.presentation.openmajor.navigation.OpenMajorRoute
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.openMajorNavGraph
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.timetableNavGraph
 import com.chukchukhaksa.mobile.presentation.web.navigation.webNavGraph
+import com.multiplatform.webview.web.rememberSaveableWebViewState
+import com.multiplatform.webview.web.rememberWebViewNavigator
+import com.multiplatform.webview.web.rememberWebViewState
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
@@ -38,6 +44,8 @@ fun App(
             val uriHandler = LocalUriHandler.current
             val navBackStackEntry by navigator.navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route ?: ""
+            val webViewState = rememberSaveableWebViewState("https://naver.com")
+            val webViewNavigator = rememberWebViewNavigator()
 
             viewModel.mviStore.sideEffects.collectWithLifecycle { sideEffect ->
                 when (sideEffect) {
@@ -69,6 +77,8 @@ fun App(
                     NavHost(
                         navController = navigator.navController,
                         startDestination = navigator.startDestination,
+                        enterTransition = { EnterTransition.None },
+                        exitTransition = { ExitTransition.None },
                     ) {
                         openMajorNavGraph(
                             popBackStack = navigator::popBackStackIfNotHome,
@@ -96,7 +106,10 @@ fun App(
                             navigateCellEditor = navigator::navigateCellEditor,
                         )
 
-                        webNavGraph()
+                        webNavGraph(
+                            webViewState = webViewState,
+                            webViewNavigator = webViewNavigator,
+                        )
                     }
 
                     if (uiState.showNetworkErrorDialog) {

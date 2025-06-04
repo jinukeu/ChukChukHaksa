@@ -71,6 +71,8 @@ kotlin {
             implementation(libs.kmp.firebase.crashlytics)
             implementation(libs.kmp.firebase.analytics)
             implementation(libs.napier)
+
+            implementation(libs.compose.webview.multiplatform)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

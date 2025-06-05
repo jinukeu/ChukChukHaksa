@@ -12,13 +12,11 @@ fun NavController.navigateWeb() {
 }
 
 fun NavGraphBuilder.webNavGraph(
-    webViewState: WebViewState,
-    webViewNavigator: WebViewNavigator,
+    nativeWebView: Any
 ) {
     composable(route = WebNavigationRoute.route) {
         WebRoute(
-            webViewState = webViewState,
-            webViewNavigator = webViewNavigator,
+            nativeWebView = nativeWebView,
         )
     }
 }

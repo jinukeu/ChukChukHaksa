@@ -20,14 +20,12 @@ import com.chukchukhaksa.mobile.common.designsystem.component.bottomnavigation.g
 import com.chukchukhaksa.mobile.common.designsystem.component.dialog.SuwikiDialog
 import com.chukchukhaksa.mobile.common.designsystem.component.toast.SuwikiToast
 import com.chukchukhaksa.mobile.common.designsystem.theme.SuwikiTheme
+import com.chukchukhaksa.mobile.common.kmp.rememberNativeWebView
 import com.chukchukhaksa.mobile.common.ui.collectWithLifecycle
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.OpenMajorRoute
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.openMajorNavGraph
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.timetableNavGraph
 import com.chukchukhaksa.mobile.presentation.web.navigation.webNavGraph
-import com.multiplatform.webview.web.rememberSaveableWebViewState
-import com.multiplatform.webview.web.rememberWebViewNavigator
-import com.multiplatform.webview.web.rememberWebViewState
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
@@ -44,8 +42,7 @@ fun App(
             val uriHandler = LocalUriHandler.current
             val navBackStackEntry by navigator.navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route ?: ""
-            val webViewState = rememberSaveableWebViewState("https://naver.com")
-            val webViewNavigator = rememberWebViewNavigator()
+            val nativeWebView = rememberNativeWebView()
 
             viewModel.mviStore.sideEffects.collectWithLifecycle { sideEffect ->
                 when (sideEffect) {
@@ -107,8 +104,7 @@ fun App(
                         )
 
                         webNavGraph(
-                            webViewState = webViewState,
-                            webViewNavigator = webViewNavigator,
+                            nativeWebView = nativeWebView,
                         )
                     }
 

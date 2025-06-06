@@ -1,5 +1,6 @@
 package com.chukchukhaksa.mobile.common.kmp
 
+import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -11,8 +12,14 @@ actual fun rememberNativeWebView(): Any {
 
     return remember {
         android.webkit.WebView(context).apply {
+            layoutParams = android.view.ViewGroup.LayoutParams(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
             settings.javaScriptEnabled = true
-            webViewClient = WebViewClient()
+            settings.domStorageEnabled = true
+            webChromeClient = WebChromeClient()
         }
     }
 }

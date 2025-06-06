@@ -20,7 +20,7 @@ private fun WebScreen(
 ) {
     SuwikiBackground {
         WebView(
-            url = "https://naver.com",
+            url = "https://www.cchaksa.com/",
             nativeWebView = nativeWebView
         )
     }

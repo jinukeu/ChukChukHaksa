@@ -58,8 +58,8 @@ fun App(
                                 )
                                 navigator.popBackStackIfNotHome()
                             },
-                            handleException = {},
-                            onShowToast = {},
+                            handleException = viewModel::handleException,
+                            onShowToast = viewModel::onShowToast,
                         )
 
                         timetableNavGraph(
@@ -69,8 +69,8 @@ fun App(
                             navigateTimetableEditor = navigator::navigateTimetableEditor,
                             navigateTimetableList = navigator::navigateTimetableList,
                             navigateOpenLecture = navigator::navigateOpenLecture,
-                            handleException = {},
-                            onShowToast = {},
+                            handleException = viewModel::handleException,
+                            onShowToast = viewModel::onShowToast,
                             navigateOpenMajor = navigator::navigateOpenMajor,
                             navigateCellEditor = navigator::navigateCellEditor,
                         )

@@ -31,6 +31,7 @@ import chukchukhaksa.composeapp.generated.resources.open_major_empty_search_resu
 import chukchukhaksa.composeapp.generated.resources.open_major_need_login_toast
 import chukchukhaksa.composeapp.generated.resources.open_major_screen_search_bar_placeholder
 import chukchukhaksa.composeapp.generated.resources.word_confirm
+import com.chukchukhaksa.mobile.common.designsystem.component.SuwikiBackground
 import com.chukchukhaksa.mobile.common.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.chukchukhaksa.mobile.common.designsystem.component.button.SuwikiContainedLargeButton
 import com.chukchukhaksa.mobile.common.designsystem.component.loading.LoadingScreen
@@ -126,8 +127,8 @@ fun OpenMajorScreen(
     onClickSearchBarClearButton: () -> Unit = {},
     onClickTab: (Int) -> Unit = {},
 ) {
-    Box(
-        modifier = Modifier.background(White),
+    SuwikiBackground(
+        color = White,
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),

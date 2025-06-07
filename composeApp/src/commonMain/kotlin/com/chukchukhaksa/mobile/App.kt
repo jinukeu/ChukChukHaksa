@@ -74,8 +74,6 @@ fun App(
                     NavHost(
                         navController = navigator.navController,
                         startDestination = navigator.startDestination,
-                        enterTransition = { EnterTransition.None },
-                        exitTransition = { ExitTransition.None },
                     ) {
                         openMajorNavGraph(
                             popBackStack = navigator::popBackStackIfNotHome,

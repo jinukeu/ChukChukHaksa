@@ -26,6 +26,7 @@ actual fun WebView(url: String, nativeWebView: Any) {
     UIKitView(
         factory = {
             val request = NSURLRequest(NSURL(string = url))
+            webView.allowsBackForwardNavigationGestures = true
             webView.navigationDelegate = object : NSObject(), WKNavigationDelegateProtocol {
 
                 override fun webView(

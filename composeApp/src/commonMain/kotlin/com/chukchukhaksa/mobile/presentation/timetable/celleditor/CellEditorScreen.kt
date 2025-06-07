@@ -53,6 +53,7 @@ import chukchukhaksa.composeapp.generated.resources.open_lecture_success_edit_ce
 import chukchukhaksa.composeapp.generated.resources.word_add
 import chukchukhaksa.composeapp.generated.resources.word_complete
 import chukchukhaksa.composeapp.generated.resources.word_delete
+import com.chukchukhaksa.mobile.common.designsystem.component.SuwikiBackground
 import com.chukchukhaksa.mobile.common.designsystem.component.appbar.SuwikiAppBarWithTitle
 import com.chukchukhaksa.mobile.common.designsystem.component.button.SuwikiContainedLargeButton
 import com.chukchukhaksa.mobile.common.designsystem.component.button.SuwikiContainedSmallButton
@@ -123,197 +124,200 @@ fun CellEditorScreen(
     onClickColorChip: (TimetableCellColor) -> Unit = {},
     onClickCompleteButton: () -> Unit = {},
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(White),
+    SuwikiBackground(
+        color = White
     ) {
-        SuwikiAppBarWithTitle(
-            showBackIcon = false,
-            title = stringResource(Res.string.add_cell_screen_title),
-            onClickClose = onClickClose,
-        )
-
         Column(
             modifier = Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize(),
         ) {
-            Spacer(modifier = Modifier.size(20.dp))
-
-            EditorScreenRow(
-                name = stringResource(Res.string.add_cell_screen_lecture_name),
-                verticalAlignment = Alignment.CenterVertically,
-                content = {
-                    SuwikiSmallTextField(
-                        showClearButton = false,
-                        value = uiState.lectureName,
-                        onValueChange = onValueChangeLectureName,
-                        placeholder = stringResource(Res.string.add_cell_screen_input_lecture_name),
-                    )
-                },
+            SuwikiAppBarWithTitle(
+                showBackIcon = false,
+                title = stringResource(Res.string.add_cell_screen_title),
+                onClickClose = onClickClose,
             )
 
-            EditorScreenRow(
-                name = stringResource(Res.string.add_cell_screen_professor_name),
-                verticalAlignment = Alignment.CenterVertically,
-                content = {
-                    SuwikiSmallTextField(
-                        showClearButton = false,
-                        value = uiState.professorName,
-                        onValueChange = onValueChangeProfessorName,
-                        placeholder = stringResource(Res.string.add_cell_screen_input_professor_name),
-                    )
-                },
-            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                Spacer(modifier = Modifier.size(20.dp))
 
-            EditorScreenRow(
-                name = stringResource(Res.string.add_cell_screen_time_location),
-                verticalAlignment = Alignment.CenterVertically,
-                content = {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.CenterEnd
-                    ) {
-                        SuwikiContainedSmallButton(
-                            text = stringResource(Res.string.word_add),
-                            onClick = onClickAddButton,
-                        )
-                    }
-                },
-            )
-
-            uiState.cellStateList.forEachIndexed { index, cell ->
-                Column {
-                    EditorScreenRow(
-                        name = stringResource(Res.string.add_cell_screen_day_of_week),
-                        verticalAlignment = Alignment.Top,
-                        content = {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                            ) {
-                                FlowRow(
-                                    modifier = Modifier.weight(1f, false),
-                                    verticalArrangement = Arrangement.spacedBy(6.dp),
-                                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                ) {
-                                    TimetableDay.entries.filter { it != TimetableDay.E_LEARNING }
-                                        .forEach { day ->
-                                            SuwikiOutlinedChip(
-                                                text = day.toText(),
-                                                isChecked = cell.day == day,
-                                                onClick = { onClickDayChip(index, day) },
-                                            )
-                                        }
-                                }
-                                Spacer(modifier = Modifier.size(10.dp))
-                                SuwikiContainedSmallButton(
-                                    text = stringResource(Res.string.word_delete),
-                                    onClick = { onClickDeleteButton(index) },
-                                )
-                            }
-                        },
-                    )
-
-                    Row(
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            SuwikiSmallTextField(
-                                value = cell.startPeriod,
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                onValueChange = { onValueChangeStartPeriod(index, it) },
-                                showClearButton = false,
-                                textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
-                                modifier = Modifier.width(27.dp),
-                                placeholder = stringResource(Res.string.add_cell_screen_period),
-                            )
-
-                            HorizontalDivider(
-                                modifier = Modifier.width(14.dp),
-                            )
-
-                            SuwikiSmallTextField(
-                                value = cell.endPeriod,
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                onValueChange = { onValueChangeEndPeriod(index, it) },
-                                showClearButton = false,
-                                textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
-                                modifier = Modifier.width(27.dp),
-                                placeholder = stringResource(Res.string.add_cell_screen_period),
-                            )
-                        }
-
+                EditorScreenRow(
+                    name = stringResource(Res.string.add_cell_screen_lecture_name),
+                    verticalAlignment = Alignment.CenterVertically,
+                    content = {
                         SuwikiSmallTextField(
                             showClearButton = false,
-                            value = cell.location,
-                            onValueChange = { onValueChangeLocation(index, it) },
-                            placeholder = stringResource(Res.string.add_cell_screen_input_location),
+                            value = uiState.lectureName,
+                            onValueChange = onValueChangeLectureName,
+                            placeholder = stringResource(Res.string.add_cell_screen_input_lecture_name),
                         )
+                    },
+                )
+
+                EditorScreenRow(
+                    name = stringResource(Res.string.add_cell_screen_professor_name),
+                    verticalAlignment = Alignment.CenterVertically,
+                    content = {
+                        SuwikiSmallTextField(
+                            showClearButton = false,
+                            value = uiState.professorName,
+                            onValueChange = onValueChangeProfessorName,
+                            placeholder = stringResource(Res.string.add_cell_screen_input_professor_name),
+                        )
+                    },
+                )
+
+                EditorScreenRow(
+                    name = stringResource(Res.string.add_cell_screen_time_location),
+                    verticalAlignment = Alignment.CenterVertically,
+                    content = {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.CenterEnd
+                        ) {
+                            SuwikiContainedSmallButton(
+                                text = stringResource(Res.string.word_add),
+                                onClick = onClickAddButton,
+                            )
+                        }
+                    },
+                )
+
+                uiState.cellStateList.forEachIndexed { index, cell ->
+                    Column {
+                        EditorScreenRow(
+                            name = stringResource(Res.string.add_cell_screen_day_of_week),
+                            verticalAlignment = Alignment.Top,
+                            content = {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                ) {
+                                    FlowRow(
+                                        modifier = Modifier.weight(1f, false),
+                                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                    ) {
+                                        TimetableDay.entries.filter { it != TimetableDay.E_LEARNING }
+                                            .forEach { day ->
+                                                SuwikiOutlinedChip(
+                                                    text = day.toText(),
+                                                    isChecked = cell.day == day,
+                                                    onClick = { onClickDayChip(index, day) },
+                                                )
+                                            }
+                                    }
+                                    Spacer(modifier = Modifier.size(10.dp))
+                                    SuwikiContainedSmallButton(
+                                        text = stringResource(Res.string.word_delete),
+                                        onClick = { onClickDeleteButton(index) },
+                                    )
+                                }
+                            },
+                        )
+
+                        Row(
+                            modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(20.dp),
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            ) {
+                                SuwikiSmallTextField(
+                                    value = cell.startPeriod,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    onValueChange = { onValueChangeStartPeriod(index, it) },
+                                    showClearButton = false,
+                                    textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
+                                    modifier = Modifier.width(27.dp),
+                                    placeholder = stringResource(Res.string.add_cell_screen_period),
+                                )
+
+                                HorizontalDivider(
+                                    modifier = Modifier.width(14.dp),
+                                )
+
+                                SuwikiSmallTextField(
+                                    value = cell.endPeriod,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    onValueChange = { onValueChangeEndPeriod(index, it) },
+                                    showClearButton = false,
+                                    textStyle = SuwikiTheme.typography.body5.copy(textAlign = TextAlign.Center),
+                                    modifier = Modifier.width(27.dp),
+                                    placeholder = stringResource(Res.string.add_cell_screen_period),
+                                )
+                            }
+
+                            SuwikiSmallTextField(
+                                showClearButton = false,
+                                value = cell.location,
+                                onValueChange = { onValueChangeLocation(index, it) },
+                                placeholder = stringResource(Res.string.add_cell_screen_input_location),
+                            )
+                        }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(20.dp))
 
-            EditorScreenRow(
-                name = stringResource(Res.string.add_cell_screen_color),
-                verticalAlignment = Alignment.Top,
-                content = {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        FlowRow(
-                            modifier = Modifier.weight(1f, false),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                EditorScreenRow(
+                    name = stringResource(Res.string.add_cell_screen_color),
+                    verticalAlignment = Alignment.Top,
+                    content = {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
-                            TimetableCellColor.entries.forEach {
-                                Box(
-                                    modifier = Modifier
-                                        .size(24.dp)
-                                        .aspectRatio(1f)
-                                        .clip(CircleShape)
-                                        .background(Color(timetableCellColorHexMap[it]!!))
-                                        .suwikiClickable(
-                                            rippleEnabled = false,
-                                            onClick = { onClickColorChip(it) },
-                                        ),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    if (it == uiState.selectedTimetableCellColor) {
-                                        Icon(
-                                            modifier = Modifier.size(16.dp),
-                                            painter = painterResource(resource = Res.drawable.ic_align_checked),
-                                            contentDescription = null,
-                                            tint = White,
-                                        )
+                            FlowRow(
+                                modifier = Modifier.weight(1f, false),
+                                verticalArrangement = Arrangement.spacedBy(12.dp),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            ) {
+                                TimetableCellColor.entries.forEach {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(24.dp)
+                                            .aspectRatio(1f)
+                                            .clip(CircleShape)
+                                            .background(Color(timetableCellColorHexMap[it]!!))
+                                            .suwikiClickable(
+                                                rippleEnabled = false,
+                                                onClick = { onClickColorChip(it) },
+                                            ),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        if (it == uiState.selectedTimetableCellColor) {
+                                            Icon(
+                                                modifier = Modifier.size(16.dp),
+                                                painter = painterResource(resource = Res.drawable.ic_align_checked),
+                                                contentDescription = null,
+                                                tint = White,
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                },
-            )
-        }
+                    },
+                )
+            }
 
-        SuwikiContainedLargeButton(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
-                .imePadding(),
-            text = stringResource(resource = Res.string.word_complete),
-            onClick = onClickCompleteButton,
-        )
-        Spacer(modifier = Modifier.size(20.dp))
+            SuwikiContainedLargeButton(
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .imePadding(),
+                text = stringResource(resource = Res.string.word_complete),
+                onClick = onClickCompleteButton,
+            )
+            Spacer(modifier = Modifier.size(20.dp))
+        }
     }
 }
 

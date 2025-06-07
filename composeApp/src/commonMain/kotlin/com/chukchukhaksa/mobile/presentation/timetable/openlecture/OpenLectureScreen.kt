@@ -183,11 +183,6 @@ fun OpenLectureScreen(
                 modifier = Modifier
                     .weight(1f),
             ) {
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(32.dp),
-                )
                 Column {
                     Row(
                         modifier = Modifier.padding(horizontal = 24.dp),

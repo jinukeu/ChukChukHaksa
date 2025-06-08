@@ -6,8 +6,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,7 +20,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import chukchukhaksa.composeapp.generated.resources.Res
 import chukchukhaksa.composeapp.generated.resources.timetable_screen_need_create_timetable
 import chukchukhaksa.composeapp.generated.resources.timetable_screen_select_type_cell_title
+import com.chukchukhaksa.mobile.common.designsystem.component.SuwikiBackground
 import com.chukchukhaksa.mobile.common.designsystem.component.bottomsheet.SuwikiSelectBottomSheet
+import com.chukchukhaksa.mobile.common.designsystem.theme.Gray95
+import com.chukchukhaksa.mobile.common.designsystem.theme.GrayFB
 import com.chukchukhaksa.mobile.common.designsystem.theme.White
 import com.chukchukhaksa.mobile.common.model.TimetableCell
 import com.chukchukhaksa.mobile.common.ui.collectWithLifecycle
@@ -95,41 +102,47 @@ fun TimetableScreen(
     onClickSetting: () -> Unit = {},
     onClickHamburger: () -> Unit = {},
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding),
+    SuwikiBackground(
+        contentWindowInsets = WindowInsets.navigationBars,
+        color = GrayFB
     ) {
-        TimetableAppbar(
-            name = uiState.timetable?.name,
-            onClickAdd = onClickAppbarAdd,
-            onClickHamburger = onClickHamburger,
-            onClickSetting = onClickSetting,
-        )
-
-        AnimatedVisibility(
-            visible = uiState.showTimetableEmptyColumn == true,
-            enter = fadeIn(),
-            exit = fadeOut(),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
         ) {
-            TimetableEmptyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(White),
-                onClickAdd = onClickAddTimetable,
+            TimetableAppbar(
+                modifier = Modifier.padding(WindowInsets.statusBars.asPaddingValues()),
+                name = uiState.timetable?.name,
+                onClickAdd = onClickAppbarAdd,
+                onClickHamburger = onClickHamburger,
+                onClickSetting = onClickSetting,
             )
-        }
 
-        AnimatedVisibility(
-            visible = uiState.showTimetableEmptyColumn == false,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            Timetable(
-                timetable = uiState.timetable ?: com.chukchukhaksa.mobile.common.model.Timetable(),
-                type = uiState.cellType,
-                onClickTimetableCell = onClickTimetableCell,
-            )
+            AnimatedVisibility(
+                visible = uiState.showTimetableEmptyColumn == true,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                TimetableEmptyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(White),
+                    onClickAdd = onClickAddTimetable,
+                )
+            }
+
+            AnimatedVisibility(
+                visible = uiState.showTimetableEmptyColumn == false,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                Timetable(
+                    timetable = uiState.timetable ?: com.chukchukhaksa.mobile.common.model.Timetable(),
+                    type = uiState.cellType,
+                    onClickTimetableCell = onClickTimetableCell,
+                )
+            }
         }
     }
 

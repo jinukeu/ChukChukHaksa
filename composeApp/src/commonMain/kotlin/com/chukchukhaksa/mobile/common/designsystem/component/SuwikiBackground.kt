@@ -1,5 +1,7 @@
 package com.chukchukhaksa.mobile.common.designsystem.component
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.MutableWindowInsets
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import com.chukchukhaksa.mobile.common.designsystem.theme.White
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -30,6 +33,8 @@ fun SuwikiBackground(
         )
     }
 
+    val focusManager = LocalFocusManager.current
+
     Surface(
         color = color,
         modifier = modifier
@@ -37,7 +42,13 @@ fun SuwikiBackground(
             .onConsumedWindowInsetsChanged { consumedWindowInsets ->
                 safeInsets.insets = contentWindowInsets.exclude(consumedWindowInsets)
             }
-            .padding(safeInsets.insets.asPaddingValues()),
+            .padding(safeInsets.insets.asPaddingValues())
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) {
+                focusManager.clearFocus()
+            },
     ) {
         content()
     }

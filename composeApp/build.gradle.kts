@@ -91,8 +91,8 @@ android {
         applicationId = "com.kunize.uswtimetable"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 41
-        versionName = "2.3.7"
+        versionCode = 42
+        versionName = "2.4.0"
     }
     packaging {
         resources {
@@ -116,6 +116,11 @@ android {
 
     buildFeatures {
         buildConfig = true
+    }
+
+    // https://hhtt.kr/103848
+    lint {
+        disable += "NullSafeMutableLiveData"
     }
 }
 

@@ -14,6 +14,7 @@ import chukchukhaksa.composeapp.generated.resources.word_confirm
 import com.chukchukhaksa.mobile.common.designsystem.component.dialog.SuwikiDialog
 import com.chukchukhaksa.mobile.common.designsystem.component.toast.SuwikiToast
 import com.chukchukhaksa.mobile.common.designsystem.theme.SuwikiTheme
+import com.chukchukhaksa.mobile.common.kmp.SetStatusBarColor
 import com.chukchukhaksa.mobile.common.ui.collectWithLifecycle
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.OpenMajorRoute
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.openMajorNavGraph
@@ -28,6 +29,7 @@ fun App(
     viewModel: MainViewModel = koinViewModel(),
     navigator: MainNavigator = rememberMainNavigator(),
 ) {
+    SetStatusBarColor()
     SuwikiTheme {
         KoinContext {
             val uiState = viewModel.mviStore.uiState.collectAsState().value

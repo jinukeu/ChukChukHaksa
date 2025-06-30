@@ -54,6 +54,7 @@ fun App(
 
             LaunchedEffect(key1 = Unit) {
                 viewModel.checkNeedForceUpdate()
+                viewModel.testTokenApi()
             }
 
             Scaffold(

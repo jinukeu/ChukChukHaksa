@@ -14,7 +14,7 @@ val presentationModule = module {
     viewModelOf(::TimetableViewModel)
     viewModelOf(::TimetableListViewModel)
     viewModelOf(::TimetableEditorViewModel)
-    viewModelOf(::MainViewModel)
+    factory { MainViewModel(get(), get()) }
     viewModelOf(::CellEditorViewModel)
     viewModelOf(::OpenLectureViewModel)
     viewModelOf(::OpenMajorViewModel)

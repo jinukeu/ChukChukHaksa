@@ -13,6 +13,7 @@ import com.chukchukhaksa.mobile.local.datasource.timetable.di.localTimetableData
 import com.chukchukhaksa.mobile.local.datastore.di.dataStoreModule
 import com.chukchukhaksa.mobile.remote.config.remoteAppConfigDataSourceModule
 import com.chukchukhaksa.mobile.remote.di.firebaseDatabaseModule
+import com.chukchukhaksa.mobile.remote.di.networkModule
 import com.chukchukhaksa.mobile.remote.timetable.remoteOpenLectureDataSourceModule
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -24,6 +25,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
         modules(
             platformModule,
             domainModule,
+            networkModule,
             dataStoreModule,
             timetableDatabaseModule,
             openMajorDatabaseModule,

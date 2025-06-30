@@ -10,6 +10,7 @@ import com.chukchukhaksa.mobile.common.model.UnknownException
 import com.chukchukhaksa.mobile.common.ui.MviStore
 import com.chukchukhaksa.mobile.common.ui.mviStore
 import com.chukchukhaksa.mobile.domain.config.usecase.CheckNeedForceUpdateUseCase
+import com.chukchukhaksa.mobile.domain.usecase.TestTokenUseCase
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 class MainViewModel(
-    val checkNeedForceUpdateUseCase: CheckNeedForceUpdateUseCase
+    val checkNeedForceUpdateUseCase: CheckNeedForceUpdateUseCase,
+    val testTokenUseCase: TestTokenUseCase
 ) : ViewModel() {
     val mviStore: MviStore<MainState, MainSideEffect> = mviStore(MainState())
 
@@ -41,6 +43,21 @@ class MainViewModel(
         }
 
         isFirstVisit = false
+    }
+
+    fun testTokenApi() = viewModelScope.launch {
+        Napier.d("Starting token test API call")
+
+        testTokenUseCase().onSuccess { response ->
+            Napier.d("Token test API success: $response")
+            response.let { data ->
+                Napier.d("Access Token: ${data.accessToken}")
+                Napier.d("Refresh Token: ${data.refreshToken}")
+            } ?: Napier.d("No token data received")
+        }.onFailure { exception ->
+            Napier.e("Token test API failed", exception)
+            Napier.e("Error message: ${exception.message}")
+        }
     }
 
     fun openAppStore() {

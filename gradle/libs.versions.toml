@@ -79,6 +79,7 @@ firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analy
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar-jdk-libs" }
 
 napier = { group = "io.github.aakira", name = "napier", version.ref = "napier" }
+ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler" }
 
 
 [plugins]

@@ -16,6 +16,7 @@ import chukchukhaksa.composeapp.generated.resources.ic_search
 import com.chukchukhaksa.mobile.common.designsystem.theme.Gray95
 import com.chukchukhaksa.mobile.common.designsystem.theme.Primary
 import com.chukchukhaksa.mobile.common.designsystem.theme.White
+import com.chukchukhaksa.mobile.presentation.web.navigation.WebNavigationRoute
 import org.jetbrains.compose.resources.painterResource
 
 data class BottomNavigationItem(
@@ -71,6 +72,6 @@ fun getBottomNavigationItems() = listOf(
     BottomNavigationItem(
         label = "웹",
         icon = painterResource(Res.drawable.ic_search),
-        route = "web",
+        route = WebNavigationRoute.homeRoute,
     ),
 )

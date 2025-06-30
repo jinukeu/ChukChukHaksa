@@ -15,13 +15,12 @@ import platform.darwin.NSObject
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun WebView(url: String, nativeWebView: Any) {
+actual fun WebView(
+    url: String,
+    nativeWebView: Any,
+    onUrlChange: (String) -> Boolean,
+) {
     val webView = nativeWebView as WKWebView
-    var backEnabled by remember { mutableStateOf(webView.canGoBack()) }
-
-    BackHandler(backEnabled) {
-        webView.goBack()
-    }
 
     UIKitView(
         factory = {
@@ -31,9 +30,15 @@ actual fun WebView(url: String, nativeWebView: Any) {
 
                 override fun webView(
                     webView: WKWebView,
-                    didStartProvisionalNavigation: WKNavigation?
+                    decidePolicyForNavigationAction: WKNavigationAction,
+                    decisionHandler: (WKNavigationActionPolicy) -> Unit
                 ) {
-                    backEnabled = true
+                    val nextUrl = decidePolicyForNavigationAction.request.URL?.absoluteString ?: ""
+                    if (onUrlChange(nextUrl)) {
+                        decisionHandler(WKNavigationActionPolicy.WKNavigationActionPolicyCancel)
+                    } else {
+                        decisionHandler(WKNavigationActionPolicy.WKNavigationActionPolicyAllow)
+                    }
                 }
             }
 

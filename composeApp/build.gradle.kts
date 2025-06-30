@@ -73,6 +73,7 @@ kotlin {
             implementation(libs.napier)
 
             implementation(libs.compose.webview.multiplatform)
+            implementation(libs.ui.backhandler)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

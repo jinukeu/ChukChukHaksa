@@ -6,22 +6,26 @@ import com.chukchukhaksa.mobile.common.kmp.WebView
 
 @Composable
 fun WebRoute(
-    nativeWebView: Any
+    nativeWebView: Any,
+    onUrlChange: (String) -> Boolean,
 ) {
 
     WebScreen(
         nativeWebView = nativeWebView,
+        onUrlChange = onUrlChange,
     )
 }
 
 @Composable
 private fun WebScreen(
-    nativeWebView: Any
+    nativeWebView: Any,
+    onUrlChange: (String) -> Boolean,
 ) {
     SuwikiBackground {
         WebView(
             url = "https://www.cchaksa.com/",
-            nativeWebView = nativeWebView
+            nativeWebView = nativeWebView,
+            onUrlChange = onUrlChange,
         )
     }
 }

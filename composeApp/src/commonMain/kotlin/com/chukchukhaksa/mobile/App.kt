@@ -25,7 +25,9 @@ import com.chukchukhaksa.mobile.common.ui.collectWithLifecycle
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.OpenMajorRoute
 import com.chukchukhaksa.mobile.presentation.openmajor.navigation.openMajorNavGraph
 import com.chukchukhaksa.mobile.presentation.timetable.navigation.timetableNavGraph
+import com.chukchukhaksa.mobile.presentation.web.navigation.WebNavigationRoute
 import com.chukchukhaksa.mobile.presentation.web.navigation.webNavGraph
+import io.github.aakira.napier.Napier
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
@@ -58,17 +60,19 @@ fun App(
                 modifier = modifier,
                 bottomBar = {
                     val bottomNavigationItems = getBottomNavigationItems()
-                    SuwikiBottomNavigationBar(
-                        items = bottomNavigationItems,
-                        selectedRoute = when {
-                            currentRoute.startsWith("timetable") -> "timetable"
-                            currentRoute.startsWith("web") -> "web"
-                            else -> "timetable"
-                        },
-                        onItemClick = { route ->
-                            navigator.navigateToTab(route)
-                        }
-                    )
+                    if (currentRoute != WebNavigationRoute.detailRoute) {
+                        SuwikiBottomNavigationBar(
+                            items = bottomNavigationItems,
+                            selectedRoute = when {
+                                currentRoute.startsWith("timetable") -> "timetable"
+                                currentRoute.startsWith(WebNavigationRoute.homeRoute) -> WebNavigationRoute.homeRoute
+                                else -> "timetable"
+                            },
+                            onItemClick = { route ->
+                                navigator.navigateToTab(route)
+                            }
+                        )
+                    }
                 },
                 content = { innerPadding ->
                     NavHost(
@@ -103,6 +107,16 @@ fun App(
 
                         webNavGraph(
                             nativeWebView = nativeWebView,
+                            onUrlChange = {
+                                if (it.startsWith("https://www.cchaksa") == true) {
+                                    Napier.d(tag = "TEST", message = "navigateWebDetail")
+                                    navigator.navigateWebDetail()
+                                    false
+                                } else {
+                                    Napier.d(tag = "TEST", message = "no navigate")
+                                    true
+                                }
+                            }
                         )
                     }
 
